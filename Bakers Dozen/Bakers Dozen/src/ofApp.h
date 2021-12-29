@@ -1,8 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
+#include "ofVec3f.h"
+#include "Block.h"
 #include "Baker.h"
-#include "Transform.h"
 
 class ofApp : public ofBaseApp{
 
@@ -20,8 +21,12 @@ class ofApp : public ofBaseApp{
 		void mouseEntered(int x, int y);
 		void mouseExited(int x, int y);
 		void windowResized(int w, int h);
-		void dragEvent(ofDragInfo dragInfo);
-		void gotMessage(ofMessage msg);
 
-		Baker* baker;
+		ofCamera cam;
+		ofPlanePrimitive ground;
+		ofTexture blockImage, floorImage;
+		ofLight light;
+		Block blocks[256];
+
+		Baker bakers[4];
 };

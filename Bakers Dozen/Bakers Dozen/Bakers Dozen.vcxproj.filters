@@ -49,16 +49,13 @@
     <ClCompile Include="..\..\..\..\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxToggle.cpp">
       <Filter>addons\ofxGui\src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Entity.cpp">
+    <ClCompile Include="src\Block.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Baker.cpp">
+    <ClCompile Include="src\Character.cpp">
       <Filter>src</Filter>
     </ClCompile>
-    <ClCompile Include="src\Transform.cpp">
-      <Filter>src</Filter>
-    </ClCompile>
-    <ClCompile Include="src\Renderer.cpp">
+    <ClCompile Include="src\GridItem.cpp">
       <Filter>src</Filter>
     </ClCompile>
   </ItemGroup>
@@ -281,16 +278,13 @@
     <ClInclude Include="..\..\..\..\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxToggle.h">
       <Filter>addons\ofxGui\src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Entity.h">
+    <ClInclude Include="src\Block.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Baker.h">
+    <ClInclude Include="src\Character.h">
       <Filter>src</Filter>
     </ClInclude>
-    <ClInclude Include="src\Transform.h">
-      <Filter>src</Filter>
-    </ClInclude>
-    <ClInclude Include="src\Renderer.h">
+    <ClInclude Include="src\GridItem.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
