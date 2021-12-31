@@ -4,9 +4,22 @@ void Board::reset(ofTexture* breakableTexture, ofTexture* solidTexture)
 {
 	for (int y = 0; y < BOARD_SIZE; y++) {
 		for (int x = 0; x < BOARD_SIZE; x++) {
+			//Skip certain board positions to avoid smothering players.
+			if (x == 1 || x == BOARD_SIZE - 2) {
+				if (y == 1 || y == BOARD_SIZE - 2) {
+					continue;
+				}
+				else if (y == 2 || y == BOARD_SIZE - 3) {
+					continue;
+				}
+			}
+			else if (x == 2 || x == BOARD_SIZE - 3) {
+				if (y == 1 || y == BOARD_SIZE - 2) {
+					continue;
+				}
+			}
+
 			int i = y * BOARD_SIZE + x;
-			explosions[i] = new Explosion();
-			explosions[i]->setup(x, y);
 			if (y == 0 | x == 0 |
 				y == BOARD_SIZE - 1 | x == BOARD_SIZE - 1) {
 				blocks[i] = new Block(false, solidTexture);
@@ -14,11 +27,19 @@ void Board::reset(ofTexture* breakableTexture, ofTexture* solidTexture)
 			}
 			else if (y % 2 == 0 &&
 				x % 2 == 0) {
+				blocks[i] = new Block(false, solidTexture);
+				blocks[i]->setup(x, y, true);
+			}
+			else if (Random::Range(0,1) > 0.5) {
 				blocks[i] = new Block(true, breakableTexture);
 				blocks[i]->setup(x, y, true);
+				explosions[i] = new Explosion();
+				explosions[i]->setup(x, y);
 			}
 			else {
 				blocks[i] = new GridItem();
+				explosions[i] = new Explosion();
+				explosions[i]->setup(x, y);
 			}
 		}
 	}
@@ -34,7 +55,8 @@ void Board::update(float deltaTime) {
 			if (blocks[i]->triggerExplosion) {
 				blocks[i]->hide();
 				explosions[i]->explode();
-				//Down casting to bomb and pass across. Noting previous trigger check we can ensure safety.
+				//Explicit down casting to bomb and pass across.
+				//Noting previous trigger check we can ensure safety of casting.
 				calculateExplosion((Bomb*)blocks[i], x, y);
 				blocks[i] = new GridItem();
 			}
@@ -82,16 +104,6 @@ void Board::explodeLine(int x, int y, int dx, int dy, int power, int piercing)
 			break;
 		}
 		explosions[i]->explode();
-	}
-}
-
-void Board::destroyBlock(int x, int y)
-{
-	if (x <= BOARD_SIZE - 1 & y <= BOARD_SIZE - 1 & x >= 0 & y >= 0) {
-		int i = y * BOARD_SIZE + x;
-		blocks[i]->hide();
-		explosions[i]->explode();
-		blocks[i] = new GridItem();
 	}
 }
 

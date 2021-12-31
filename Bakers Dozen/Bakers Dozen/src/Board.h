@@ -3,6 +3,7 @@
 #include "Block.h"
 #include "Bomb.h"
 #include "Explosion.h"
+#include "Random.h"
 
 #ifndef BOARD_H
 #define BOARD_H
@@ -20,7 +21,6 @@ public:
 
 	void calculateExplosion(Bomb* bomb, int x, int y);
 	void explodeLine(int x, int y, int dx, int dy, int power, int piercing);
-	void destroyBlock(int x, int y);
 	bool checkPlaceBlocked(int x, int y);
 
 	void addBomb(int x, int y, Bomb* bomb);

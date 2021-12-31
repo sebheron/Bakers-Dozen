@@ -34,9 +34,9 @@ void ofApp::setup(){
 	players[2] = new Character("player3.obj", board);
 	players[3] = new Character("player4.obj", board);
 	players[0]->setup(1, 1, true);
-	players[1]->setup(14, 14, true);
-	players[2]->setup(1, 14, true);
-	players[3]->setup(14, 1, true);
+	players[1]->setup(15, 15, true);
+	players[2]->setup(1, 15, true);
+	players[3]->setup(15, 1, true);
 
 	exp = new Explosion();
 
@@ -70,12 +70,12 @@ void ofApp::update(){
 }
 
 void ofApp::draw(){
-	ofClear(50, 50, 50);
+	ofClear(50);
 	cam.begin();
 	ofPushMatrix();
 	
 	floorImage.bind();
-	ofSetColor(255);
+	ofSetColor(150);
 	ground.draw();
 	floorImage.unbind();
 	
