@@ -4,15 +4,21 @@
 #define GRIDITEM_H
 
 class GridItem {
-private:
+protected:
 	bool active;
 	int x, y;
 public:
 	GridItem();
 
-	void setup(int x, int y, bool active);
+	virtual void setup(int x, int y, bool active);
+	virtual void update(float deltaTime);
+	virtual void draw();
 
+	virtual bool canTraverse();
 	bool getActive();
+	void hide();
+
+	bool triggerExplosion, breakable;
 };
 
 #endif // GRIDITEM_H

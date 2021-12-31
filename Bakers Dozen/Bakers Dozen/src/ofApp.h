@@ -3,10 +3,14 @@
 #include "ofMain.h"
 #include "ofVec3f.h"
 #include "Block.h"
-#include "Baker.h"
+#include "Character.h"
+#include "Board.h"
+#include "Explosion.h"
+
+#ifndef OFAPP_H
+#define OFAPP_H
 
 class ofApp : public ofBaseApp{
-
 	public:
 		void setup();
 		void update();
@@ -26,7 +30,14 @@ class ofApp : public ofBaseApp{
 		ofPlanePrimitive ground;
 		ofTexture blockImage, floorImage;
 		ofLight light;
-		Block blocks[256];
 
-		Baker bakers[4];
+		Board* board;
+
+		Character* players[4];
+
+		Explosion* exp;
+
+		unsigned int keys[65536];
 };
+
+#endif // OFAPP_H

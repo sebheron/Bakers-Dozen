@@ -194,11 +194,16 @@ C:\Users\Sebhe\Documents\of_v0.11.2_vs2017_release\addons\ofxGui\src;%(Additiona
     <ClCompile Include="..\..\..\..\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxSlider.cpp" />
     <ClCompile Include="..\..\..\..\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxSliderGroup.cpp" />
     <ClCompile Include="..\..\..\..\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxToggle.cpp" />
+    <ClCompile Include="src\Board.cpp" />
+    <ClCompile Include="src\Bomb.cpp" />
+    <ClCompile Include="src\Explosion.cpp" />
     <ClCompile Include="src\GridItem.cpp" />
     <ClCompile Include="src\Block.cpp" />
     <ClCompile Include="src\Character.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
+    <ClCompile Include="src\Particle.cpp" />
+    <ClCompile Include="src\Random.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="..\..\..\..\of_v0.11.2_vs2017_release\addons\ofxAssimpModelLoader\libs\assimp\include\assimp\ai_assert.h" />
@@ -259,10 +264,15 @@ C:\Users\Sebhe\Documents\of_v0.11.2_vs2017_release\addons\ofxGui\src;%(Additiona
     <ClInclude Include="..\..\..\..\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxSlider.h" />
     <ClInclude Include="..\..\..\..\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxSliderGroup.h" />
     <ClInclude Include="..\..\..\..\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxToggle.h" />
+    <ClInclude Include="src\Board.h" />
+    <ClInclude Include="src\Bomb.h" />
+    <ClInclude Include="src\Explosion.h" />
     <ClInclude Include="src\GridItem.h" />
     <ClInclude Include="src\Block.h" />
     <ClInclude Include="src\Character.h" />
     <ClInclude Include="src\ofApp.h" />
+    <ClInclude Include="src\Particle.h" />
+    <ClInclude Include="src\Random.h" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="$(OF_ROOT)\libs\openFrameworksCompiled\project\vs\openframeworksLib.vcxproj">

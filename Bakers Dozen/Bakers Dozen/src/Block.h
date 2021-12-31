@@ -8,8 +8,13 @@
 #define BLOCK_H
 
 class Block : public GridItem {
+private:
+	ofTexture* texture;
 public:
-	void draw();
+	Block(bool breakable, ofTexture* texture);
+
+	void draw() override;
+	bool canTraverse() override;
 };
 
 #endif // BLOCK_H

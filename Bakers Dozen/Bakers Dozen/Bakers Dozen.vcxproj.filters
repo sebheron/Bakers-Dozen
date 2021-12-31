@@ -58,6 +58,21 @@
     <ClCompile Include="src\GridItem.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Board.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Bomb.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Explosion.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Particle.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Random.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -285,6 +300,21 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\GridItem.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Board.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Bomb.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Explosion.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Particle.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Random.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>
