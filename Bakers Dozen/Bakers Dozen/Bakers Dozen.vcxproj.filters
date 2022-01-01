@@ -73,6 +73,12 @@
     <ClCompile Include="src\Random.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Pickup.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AICharacter.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -315,6 +321,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Random.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pickup.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AICharacter.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

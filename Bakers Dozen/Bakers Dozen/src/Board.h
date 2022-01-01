@@ -4,6 +4,7 @@
 #include "Bomb.h"
 #include "Explosion.h"
 #include "Random.h"
+#include "Pickup.h"
 
 #ifndef BOARD_H
 #define BOARD_H
@@ -22,6 +23,9 @@ public:
 	void calculateExplosion(Bomb* bomb, int x, int y);
 	void explodeLine(int x, int y, int dx, int dy, int power, int piercing);
 	bool checkPlaceBlocked(int x, int y);
+	bool checkPlaceBomb(int x, int y);
+	bool checkPlacePickup(int x, int y);
+	GridItem* getGridItem(int x, int y);
 
 	void addBomb(int x, int y, Bomb* bomb);
 };

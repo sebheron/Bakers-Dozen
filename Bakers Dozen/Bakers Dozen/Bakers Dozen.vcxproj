@@ -194,6 +194,7 @@ C:\Users\Sebhe\Documents\of_v0.11.2_vs2017_release\addons\ofxGui\src;%(Additiona
     <ClCompile Include="..\..\..\..\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxSlider.cpp" />
     <ClCompile Include="..\..\..\..\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxSliderGroup.cpp" />
     <ClCompile Include="..\..\..\..\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxToggle.cpp" />
+    <ClCompile Include="src\AICharacter.cpp" />
     <ClCompile Include="src\Board.cpp" />
     <ClCompile Include="src\Bomb.cpp" />
     <ClCompile Include="src\Explosion.cpp" />
@@ -203,6 +204,7 @@ C:\Users\Sebhe\Documents\of_v0.11.2_vs2017_release\addons\ofxGui\src;%(Additiona
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
     <ClCompile Include="src\Particle.cpp" />
+    <ClCompile Include="src\Pickup.cpp" />
     <ClCompile Include="src\Random.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -264,6 +266,7 @@ C:\Users\Sebhe\Documents\of_v0.11.2_vs2017_release\addons\ofxGui\src;%(Additiona
     <ClInclude Include="..\..\..\..\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxSlider.h" />
     <ClInclude Include="..\..\..\..\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxSliderGroup.h" />
     <ClInclude Include="..\..\..\..\of_v0.11.2_vs2017_release\addons\ofxGui\src\ofxToggle.h" />
+    <ClInclude Include="src\AICharacter.h" />
     <ClInclude Include="src\Board.h" />
     <ClInclude Include="src\Bomb.h" />
     <ClInclude Include="src\Explosion.h" />
@@ -272,6 +275,7 @@ C:\Users\Sebhe\Documents\of_v0.11.2_vs2017_release\addons\ofxGui\src;%(Additiona
     <ClInclude Include="src\Character.h" />
     <ClInclude Include="src\ofApp.h" />
     <ClInclude Include="src\Particle.h" />
+    <ClInclude Include="src\Pickup.h" />
     <ClInclude Include="src\Random.h" />
   </ItemGroup>
   <ItemGroup>

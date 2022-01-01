@@ -1,25 +1,27 @@
 #pragma once
 
-#include "ofMain.h"
 #include "ofxAssimpModelLoader.h"
 #include "GridItem.h"
+#include "Random.h"
 
-#ifndef BOMB_H
-#define BOMB_H
+#ifndef PICKUP_H
+#define PICKUP_H
 
-class Bomb : public GridItem {
+enum PickupType {bomb, powerup, pierce};
+
+class Pickup : public GridItem {
 private:
 	ofxAssimpModelLoader model;
-	float scale;
+	float rotation;
+	PickupType type;
 public:
-	Bomb(int* power, int* piercing);
+	Pickup();
 
 	void setup(int x, int y, bool active) override;
 	void update(float deltaTime) override;
 	void draw() override;
 
-	int* power;
-	int* piercing;
+	PickupType getType();
 };
 
-#endif // BOMB_H
+#endif // PICKUP_H

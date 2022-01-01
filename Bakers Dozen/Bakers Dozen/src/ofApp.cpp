@@ -33,10 +33,10 @@ void ofApp::setup(){
 	players[1] = new Character("player2.obj", board);
 	players[2] = new Character("player3.obj", board);
 	players[3] = new Character("player4.obj", board);
-	players[0]->setup(1, 1, true);
-	players[1]->setup(15, 15, true);
-	players[2]->setup(1, 15, true);
-	players[3]->setup(15, 1, true);
+	players[0]->setup(1, 1);
+	players[1]->setup(15, 15);
+	players[2]->setup(1, 15);
+	players[3]->setup(15, 1);
 
 	exp = new Explosion();
 

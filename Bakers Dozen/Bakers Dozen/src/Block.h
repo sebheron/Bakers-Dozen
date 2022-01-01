@@ -14,7 +14,6 @@ public:
 	Block(bool breakable, ofTexture* texture);
 
 	void draw() override;
-	bool canTraverse() override;
 };
 
 #endif // BLOCK_H

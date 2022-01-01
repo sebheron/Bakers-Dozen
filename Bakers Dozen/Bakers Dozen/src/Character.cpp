@@ -2,34 +2,40 @@
 
 Character::Character(std::string file, Board* board)
 {
+	players.push_front(this);
+	power = 1;
+	piercing = 0;
 	this->board = board;
 	model.loadModel(file, 20);
 	model.setScaleNormalization(false);
 	model.setScale(2.5, 2.5, 2.5);
 }
 
-void Character::setup(int x, int y, bool active)
+void Character::setup(int x, int y)
 {
-	GridItem::setup(x, y, active);
+	this->x = x;
+	this->y = y;
 	position = glm::vec3(x, 0, y);
-	bombs.push_front(new Bomb());
+	bombs.push_front(new Bomb(&power, &piercing));
 	moving = false;
+	living = true;
 }
 
 void Character::update(float deltaTime)
 {
+	if (!living)
+		return;
 	if (moving) {
 		jumpTo(glm::vec3(x, 0, y), deltaTime * 10);
 	}
 }
 
 void Character::sendMove(int x, int y) {
+	if (!living)
+		return;
 	if (!moving && (x != 0 || y != 0) && abs(x) + abs(y) < 2) {
 		if (board->checkPlaceBlocked(this->x + x, this->y + y))
 			return;
-
-		prevX = this->x;
-		prevY = this->y;
 
 		if (x > 0) {
 			setRotation(0, 270, 0);
@@ -52,14 +58,36 @@ void Character::sendMove(int x, int y) {
 
 void Character::placeBomb()
 {
+	if (!living)
+		return;
 	for (Bomb* bomb : bombs) {
+		//Round the positions to provide a fluid positioning of the bombs.
+		int roundedX = round(x);
+		int roundedY = round(y);
 		//Check for the unlikely event that a bomb has been placed below the characters feet.
-		if (!board->checkPlaceBlocked(prevX, prevY)
-			&& bomb->triggerExplosion) {
-			bomb->triggerExplosion = false;
-			board->addBomb(prevX, prevY, bomb);
+		if (!board->checkPlaceBlocked(roundedX, roundedY)
+			&& bomb->isExploding()) {
+			bomb->explode(true);
+			board->addBomb(roundedX, roundedY, bomb);
 		}
 	}
+}
+
+void Character::takePickup(Pickup* pickup)
+{
+	PickupType type = pickup->getType();
+	switch (type) {
+	case bomb:
+		bombs.push_front(new Bomb(&power, &piercing));
+		break;
+	case powerup:
+		power++;
+		break;
+	case pierce:
+		piercing++;
+		break;
+	}
+	pickup->smash();
 }
 
 void Character::draw() {
@@ -80,9 +108,10 @@ void Character::jumpTo(glm::vec3 b, float t) {
 	position = glm::vec3(currentX, currentY, currentZ);
 
 	if (abs(dx) < 0.05f & abs(dz) < 0.05f) {
+		if (board->checkPlacePickup(x, y)) {
+			takePickup((Pickup*)board->getGridItem(x, y));
+		}
 		position = glm::vec3(x, 0, y);
-		prevX = x;
-		prevY = y;
 		moving = false;
 	}
 }
@@ -113,4 +142,14 @@ void Character::setScale(float x, float y, float z)
 {
 	//Half the scale.
 	model.setScale(x * 2.5, y * 2.5, z * 2.5);
+}
+
+glm::vec3 Character::getPosition()
+{
+	return position;
+}
+
+float Character::getPowerLevel() {
+	float level = piercing + power + bombs.size();
+	return level;
 }
