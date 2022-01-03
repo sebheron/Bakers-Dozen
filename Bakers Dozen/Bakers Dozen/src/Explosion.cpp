@@ -1,6 +1,6 @@
 #include "Explosion.h"
 
-Explosion::Explosion() {}
+Explosion::Explosion() : exploded(false) {}
 
 void Explosion::setup(int x, int y)
 {
@@ -20,11 +20,13 @@ void Explosion::explode()
 		float fz = Random::Range(-PARTICLE_SPEED, PARTICLE_SPEED);
 		particles[i]->setup(x, y, i > PARTICLE_COUNT / 2 ? red : yellow, fx, fy, fz, PARTICLE_EMISSION_TIME);
 	}
+	exploded = true;
 	time = PARTICLE_EMISSION_TIME;
 }
 
 void Explosion::update(float deltaTime)
 {
+	exploded = false;
 	if (time > 0)
 	{
 		time -= deltaTime;

@@ -30,5 +30,5 @@ void Particle::update(float deltaTime)
 void Particle::draw()
 {
 	ofSetColor(255, g, 0);
-	ofDrawSphere(position, 0.75 * lifetime);
+	ofDrawSphere(position, 2 * lifetime);
 }

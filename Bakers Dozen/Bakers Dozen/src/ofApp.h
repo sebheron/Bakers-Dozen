@@ -3,9 +3,10 @@
 #include "ofMain.h"
 #include "ofVec3f.h"
 #include "Block.h"
-#include "Character.h"
+#include "AICharacter.h"
 #include "Board.h"
 #include "Explosion.h"
+#include "AStar.h"
 
 #ifndef OFAPP_H
 #define OFAPP_H
@@ -30,6 +31,8 @@ class ofApp : public ofBaseApp{
 		ofPlanePrimitive ground;
 		ofTexture blockImage, floorImage;
 		ofLight light;
+
+		AStar* astar;
 
 		Board* board;
 

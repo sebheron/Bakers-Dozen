@@ -1,12 +1,13 @@
 #pragma once
 
+#include "Point.h"
+
 #ifndef GRIDITEM_H
 #define GRIDITEM_H
 
-class GridItem {
+class GridItem : public Point {
 protected:
 	bool active, traversable, triggerExplosion, breakable, canExplode;
-	int x, y;
 public:
 	GridItem(bool traversable = true, bool triggerExplosion = false, bool breakable = false);
 

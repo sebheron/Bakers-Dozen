@@ -1,138 +1,148 @@
 #include "AICharacter.h"
 
+AICharacter::AICharacter(std::string file, Board * board, AStar* astar) : astar(astar), Character::Character(file, board)
+{
+	intelligence = (int)Random::Range(6, 16);
+	state = Thinking;
+	lastState = Thinking;
+	waitX = 0;
+	waitY = 0;
+	waitTime = 1.5 / this->intelligence;
+}
+
 void AICharacter::update(float deltaTime)
 {
-	//if (state == Thinking && waitTime <= 0) {
-	//	index = 0;
-	//	//List<GameObject> powerups = CheckForPowerups();
-	//	if (board->checkPlaceBomb(x, y) && currentPath != null) {
-	//		currentPath.Reverse();
-	//		state = Hiding;
-	//	}
-	//	if (CheckForBombs((int)v2Position.x, (int)v2Position.y).Count > 0) {
-	//		waitForBombPosition = new Vector2(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
-	//		currentPath = FindPathToSafePosition();
-	//		if (currentPath != null)
-	//			State = AIBomberState.Hiding;
-	//	}
-	//	else if (SceneController.GetPlayerAtPosition((int)v2Position.x, (int)v2Position.y, gameObject)) {
-	//		currentPath = FindPathToSafePosition(Random.Range(0, 2));
-	//		if (currentPath != null)
-	//			State = AIBomberState.Hiding;
-	//	}
-	//	else if (powerups.Count > 0) {
-	//		objective = powerups[0];
-	//		currentPath = FindPathToPowerup(objective);
-	//		if (currentPath != null)
-	//			State = AIBomberState.Seeking;
-	//	}
-	//	else if (bombsAvailable > 0) {
-	//		objective = GetNearestPlayer();
-	//		if (objective != null) {
-	//			currentPath = FindPathToPlayer(objective);
-	//			if (currentPath != null)
-	//				State = AIBomberState.Seeking;
-	//		}
-	//	}
-	//	lastAction = State;
-	//}
-	//else if (currentPath == null) {
-	//	State = AIBomberState.Thinking;
-	//}
-	//else if (State == AIBomberState.Bombing) {
-	//	AddBomb(v2Position);
-	//	State = AIBomberState.Thinking;
-	//	waitTime = 1 / Intelligence;
-	//}
-	//else if (State == AIBomberState.Seeking) {
-	//	if (index < currentPath.Count) {
-	//		if (currentPath[index].Position.x == transform.position.x && currentPath[index].Position.y == transform.position.z) {
-	//			index++;
-	//		}
-	//		else {
-	//			if (Vector2.Distance(currentPath[index].Position, v2Position) > 1) {
-	//				State = AIBomberState.Thinking;
-	//			}
-	//			if (CheckForPlayers(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z)).Count <= 0) {
-	//				SetDirectionToMove(currentPath[index].Position - v2Position);
-	//				if (objective != GetNearestPlayer()) {
-	//					State = AIBomberState.Thinking;
-	//				}
-	//				else if (!moving) {
-	//					State = AIBomberState.Bombing;
-	//				}
-	//			}
-	//			else {
-	//				State = AIBomberState.Bombing;
-	//			}
-	//		}
-	//	}
-	//	else {
-	//		State = AIBomberState.Thinking;
-	//		waitTime = 1.5f / Intelligence;
-	//	}
-	//}
-	//else if (State == AIBomberState.Hiding) {
-	//	if (index < currentPath.Count) {
-	//		if (bombDetonate && CheckForBombs(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z)).Count <= 0) {
-	//			DetonateBombs();
-	//		}
-	//		if (currentPath[index].Position.x == transform.position.x && currentPath[index].Position.y == transform.position.z) {
-	//			index++;
-	//		}
-	//		else {
-	//			if (Vector2.Distance(currentPath[index].Position, v2Position) > 1) {
-	//				State = AIBomberState.Thinking;
-	//			}
-	//			if (SceneController.GetPlayerAtPosition((int)currentPath[index].Position.x, (int)currentPath[index].Position.y, gameObject) == null) {
-	//				SetDirectionToMove(currentPath[index].Position - v2Position);
-	//			}
-	//			else if (bombDetonate) {
-	//				State = AIBomberState.Thinking;
-	//			}
-	//			if (!moving) {
-	//				State = AIBomberState.Thinking;
-	//				waitTime = 1 / Intelligence;
-	//			}
-	//		}
-	//	}
-	//	else {
-	//		State = AIBomberState.Waiting;
-	//	}
-	//}
-	//else if (State == AIBomberState.Waiting) {
-	//	if (CheckForBombs(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z)).Count > 0 ||
-	//		CheckForBombs((int)waitForBombPosition.x, (int)waitForBombPosition.y).Count <= 0) {
-	//		State = AIBomberState.Thinking;
-	//		waitTime = 1.5f / Intelligence;
-	//	}
-	//}
-	//if (currentPath != null)
-	//	print(gameObject.name + " - " + lastAction + " - " + string.Join(",", currentPath.Select(x = > x.Position)));
-	//waitTime -= Time.deltaTime;
+	Character::update(deltaTime);
+	
+	if (state == Thinking && waitTime <= 0) {
+		std::vector<Pickup*> pickups = checkForRelativePickups();
+		if (checkForBombs(x, y)) {
+			waitX = x;
+			waitY = y;
+			currentPath = findPathToSafePosition();
+			if (currentPath.size() > 0)
+				state = Hiding;
+		}
+		else if (getIsPlayerAt(x, y)) {
+			currentPath = findPathToSafePosition((int)Random::Range(0, 2.9));
+			if (currentPath.size() > 0)
+				state = Hiding;
+		}
+		else if (pickups.size() > 0) {
+			objective = pickups.at(0);
+			currentPath = astar->getPath(x, y, objective->getX(), objective->getY());
+			if (currentPath.size() > 0)
+				state = Seeking;
+		}
+		else if (getBombsAvailable() > 0) {
+			objective = getNearestPlayer();
+			if (objective > 0) {
+				currentPath = astar->getBreakablePath(x, y, objective->getX(), objective->getY());
+				if (currentPath.size() > 0)
+					state = Seeking;
+			}
+		}
+		lastState = state;
+	}
+	else if (currentPath.size() <= 0) {
+		state = Thinking;
+	}
+	else if (state == Bombing) {
+		placeBomb();
+		state = Thinking;
+		waitTime = 1 / intelligence;
+	}
+	else if (state == Seeking) {
+		if (currentPath.size() > 0) {
+			Node* node = currentPath.top();
+			if (x == node->x && y == node->y) {
+				currentPath.pop();
+			}
+			else {
+				float dis = getDistance(node->x, node->y, x, y);
+				if (dis > 1) {
+					state = Thinking;
+				}
+				if (!checkForPlayers(x, y)) {
+					sendMove(node->x - x, node->y - y);
+					if (objective != getNearestPlayer()) {
+						state = Thinking;
+					}
+					else if (!moving) {
+						state = Bombing;
+					}
+				}
+				else {
+					state = Bombing;
+				}
+			}
+		}
+		else {
+			state = Thinking;
+			waitTime = 1.5f / intelligence;
+		}
+	}
+	else if (state == Hiding) {
+		if (currentPath.size() > 0) {
+			Node* node = currentPath.top();
+			//if (bombDetonate && CheckForBombs(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z)).Count <= 0) {
+			//	DetonateBombs();
+			//}
+			if (node->x == x && node->y == y) {
+				currentPath.pop();
+			}
+			else {
+				float dis = getDistance(x, y, node->x, node->y);
+				if (dis > 1) {
+					state = Thinking;
+				}
+				if (!getIsPlayerAt(x, y)) {
+					sendMove(node->x - x, node->y - y);
+				}
+				if (!moving) {
+					state = Thinking;
+					waitTime = 1 / intelligence;
+				}
+			}
+		}
+		else {
+			state = Waiting;
+		}
+	}
+	else if (state == Waiting) {
+		if (checkForBombs(x, y) || !checkForBombs(waitX, waitY))
+		{
+			state = Thinking;
+			waitTime = 1.5f / intelligence;
+		}
+	}
+	waitTime -= deltaTime;
 }
 
-std::vector<GridItem*> findPathTo(int x, int y) {
-	/*var path = SceneController.astar.FindPath(v2Position, new Vector2(Mathf.Round(powerup.transform.position.x), Mathf.Round(powerup.transform.position.z)));
-	if (path != null)
-		return path.ToList();
-	else
-		return null;*/
-}
-
-std::vector<int> AICharacter::findPathToSafePosition()
+std::stack<Node*> AICharacter::findPathToSafePosition(int skip)
 {
-	//std::vector<int> nodes = SceneController.astar.GetAllEmptyNodes()
-	//	.Where(x = > x.Position != v2Position)
-	//	.Where(x = > CheckForBombs((int)x.Position.x, (int)x.Position.y).Count == 0 && CheckForPlayers((int)x.Position.x, (int)x.Position.y).Count == 0)
-	//	.OrderBy(x = > GetPathLength(v2Position, x.Position)).ToList();
-	//for (int i = skip; i < nodes.Count; i++) {
-	//	var path = SceneController.astar.FindPath(v2Position, nodes[i].Position);
-	//	if (path != null) {
-	//		return path.ToList();
-	//	}
-	//}
-	//return null;
+	std::list<Path> paths;
+	for (int xx = 0; xx < BOARD_SIZE; xx++) {
+		for (int yy = 0; yy < BOARD_SIZE; yy++) {
+			if (!(x == xx && y == yy) && !board->checkPlaceBlocked(xx, yy) && !checkForBombs(xx, yy) && !checkForPlayers(xx, yy)) {
+				std:stack<Node*> path = astar->getPath(x, y, xx, yy);
+				paths.push_back(Path
+					{ 
+						path.size(), path
+					}
+				);
+			}
+		}
+	}
+	int i = 0;
+	paths.sort();
+	for (Path path : paths) {
+		if (i > skip && path.length > 0) {
+			return path.path;
+		}
+		i++;
+	}
+	return std::stack<Node*>();
 }
 
 std::vector<Pickup*> AICharacter::checkForRelativePickups()
@@ -140,48 +150,58 @@ std::vector<Pickup*> AICharacter::checkForRelativePickups()
 	std::vector<Pickup*> pickups;
 	for (int xx = 0; xx < BOARD_SIZE; xx++) {
 		for (int yy = 0; yy < BOARD_SIZE; yy++) {
-			float dis = glm::vec3(x - xx, 0, y - yy).length();
 			//TODO: add check for obtained powerups, ignoring those which are already collected.
 			//!ObtainedPowerup(Board[xx, yy].GetComponent<PickupController>())
-			//NEEDS PATH LENGTH CHECK TOO!
-			//GetPathLength(startPos, pos) < 8
 			if (board->checkPlacePickup(xx, yy)) {
-				pickups.push_back((Pickup*)board->getGridItem(xx, yy));
+				size_t pathSize = astar->getPath(x, y, xx, yy).size();
+				if (pathSize > 0 && pathSize < 8) {
+					pickups.push_back((Pickup*)board->getGridItem(xx, yy));
+					std:stack<Node*> path = astar->getPath(x, y, xx, yy);
+				}
 			}
 		}
 	}
 	return pickups;
 }
 
-std::vector<Bomb*> AICharacter::checkForBombs(int x, int y) {
+bool AICharacter::checkForBombs(int x, int y) {
 	std::vector<Bomb*> bombs;
-	for (int xx = 0; xx < BOARD_SIZE; xx++) {
-		for (int yy = 0; yy < BOARD_SIZE; yy++) {
+	for (int yy = 0; yy < BOARD_SIZE; yy++) {
+		for (int xx = 0; xx < BOARD_SIZE; xx++) {
 			if ((xx == x || y == yy) && board->checkPlaceBomb(xx, yy)) {
-				float dis = glm::vec3(x - xx, 0, y - yy).length();
+				float dis = getDistance(x, y, xx, yy);
 				Bomb* bomb = (Bomb*)board->getGridItem(xx, yy);
 				if (*bomb->power >= dis) {
-					bombs.push_back(bomb);
+					return true;
 				}
 			}
 		}
 	}
-	return bombs;
+	return false;
 }
 
-std::vector<Character*> AICharacter::checkForPlayers(int x, int y) {
+bool AICharacter::checkForPlayers(int x, int y) {
 	glm::vec3 startPos = glm::vec3(x, 0, y);
-	std::vector<Character*> targets;
 	for (Character* player : players) {
 		glm::vec3 playerPos = player->getPosition();
-		float dis = (playerPos - startPos).length();
-		if (dis > 0 && (playerPos.x == position.x || playerPos.y == position.y)
-			&& dis <= power/2.) {
-			//TODO: Sort players by distance
-			targets.push_back(player);
+		float dis = getDistance(playerPos.x, playerPos.z, startPos.x, startPos.z);
+		if (player->getId() != id && (playerPos.x == position.x || playerPos.z == position.z) && dis <= power) {
+			return true;
 		}
 	}
-	return targets;
+	return false;
+}
+
+bool AICharacter::getIsPlayerAt(int x, int y) {
+	glm::vec3 startPos = glm::vec3(x, 0, y);
+	for (Character* player : players) {
+		glm::vec3 playerPos = player->getPosition();
+		float dis = getDistance(playerPos.x, playerPos.z, startPos.x, startPos.z);
+		if (player->getId() != id && dis <= 0) {
+			return true;
+		}
+	}
+	return false;
 }
 
 bool AICharacter::isPlayerThreat(Character* player) {
@@ -192,7 +212,8 @@ Character* AICharacter::getNearestPlayer() {
 	Character* bestTarget = 0;
 	float closest = INFINITY;
 	for(Character* potentialTarget : players) {
-		float dis = (potentialTarget->getPosition() - position).length();
+		glm::vec3 targetPos = potentialTarget->getPosition();
+		float dis = getDistance(targetPos.x, targetPos.z, position.x, position.z);
 		if (dis > 0 && dis < closest) {
 			closest = dis;
 			bestTarget = potentialTarget;
@@ -200,35 +221,25 @@ Character* AICharacter::getNearestPlayer() {
 	}
 	return bestTarget;
 }
-//
 
-//
-//
-//
-//
-//queue<Node> lee(int startX, int startY)
-//{
-//	static int dl[] = { -1, 0, 1, 0 };
-//	static int dc[] = { 0, 1, 0, -1 };
-//
-//	queue<Node> path;
-//	path.push(Node{ startX, startY });
-//
-//	int x, y, xx, yy;
-//	while (!path.empty())
-//	{
-//		x = path.front().x;
-//		y = path.front().y;
-//		for (int i = 0; i < 4; i++)
-//		{
-//			xx = x + dl[i];
-//			yy = y + dc[i];
-//			if (board->)
-//			{
-//				path.push(Node{ xx, yy });
-//				mat[xx][yy] = -1;
-//			}
-//		}
-//		path.pop();
-//	}
-//}
+int AICharacter::getBombsAvailable()
+{
+	int b = 0;
+	for (Bomb* bomb : bombs) {
+		if (bomb->isExploding()) {
+			b++;
+		}
+	}
+	return b;
+}
+
+float AICharacter::getDistance(int x1, int y1, int x2, int y2)
+{
+	float a = x2 - x1;
+	float aa = a * a;
+
+	float b = y2 - y1;
+	float bb = b * b;
+
+	return sqrt(aa + bb);
+}

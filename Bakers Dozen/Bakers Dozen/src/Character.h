@@ -11,7 +11,7 @@
 #ifndef CHARACTER_H
 #define CHARACTER_H
 
-class Character {
+class Character : public Point {
 protected:
 	ofxAssimpModelLoader model;
 	glm::vec3 position;
@@ -19,8 +19,8 @@ protected:
 	bool moving, living;
 	Board* board;
 	std::list<Bomb*> bombs;
-	int x, y;
 	int power, piercing;
+	int id;
 public:
 	Character(std::string file, Board* board);
 
@@ -28,7 +28,7 @@ public:
 	virtual void update(float deltaTime);
 	void draw();
 	void jumpTo(glm::vec3 b, float t);
-	void sendMove(int x, int y);
+	bool sendMove(int x, int y);
 	void placeBomb();
 	void takePickup(Pickup* pickup);
 
@@ -37,8 +37,10 @@ public:
 
 	glm::vec3 getPosition();
 	float getPowerLevel();
+
+	int getId();
 	
-	static std::list<Character*> players;
+	static std::vector<Character*> players;
 };
 
 #endif // CHARACTER_H

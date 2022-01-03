@@ -127,21 +127,36 @@ bool Board::checkPlaceBlocked(int x, int y)
 bool Board::checkPlaceBomb(int x, int y)
 {
 	if (x > BOARD_SIZE - 1 | y > BOARD_SIZE - 1 | x < 0 | y < 0)
-		return true;
-	if (checkPlaceBlocked(x, y)) {
-		return blocks[y * BOARD_SIZE + x]->getExplosive();
-	}
+		return false;
+	int i = y * BOARD_SIZE + x;
+	return blocks[i]->getExplosive() && blocks[i]->getActive();
 	return false;
 }
 
 bool Board::checkPlacePickup(int x, int y)
 {
 	if (x > BOARD_SIZE - 1 | y > BOARD_SIZE - 1 | x < 0 | y < 0)
-		return true;
-	if (!checkPlaceBlocked(x, y)) {
-		return blocks[y * BOARD_SIZE + x]->isBreakable();
+		return false;
+	int i = y * BOARD_SIZE + x;
+	if (!checkPlaceBlocked(x, y) && blocks[i]->getActive()) {
+		return blocks[i]->isBreakable();
 	}
 	return false;
+}
+
+bool Board::checkPlaceBreakableBlocked(int x, int y)
+{
+	if (x > BOARD_SIZE - 1 | y > BOARD_SIZE - 1 | x < 0 | y < 0)
+		return true;
+	int i = y * BOARD_SIZE + x;
+	bool active = blocks[i]->getActive();
+	active = active ? !blocks[i]->canTraverse() : active;
+	return active ? blocks[i]->isBreakable() : active;
+}
+
+bool Board::checkExplosionOccured(int x, int y)
+{
+	return explosions[y * BOARD_SIZE + x]->exploded;
 }
 
 GridItem * Board::getGridItem(int x, int y)

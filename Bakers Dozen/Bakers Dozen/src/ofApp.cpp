@@ -29,10 +29,12 @@ void ofApp::setup(){
 	board = new Board();
 	board->reset(&blockImage, &floorImage);
 
+	astar = new AStar(board);
+
 	players[0] = new Character("player1.obj", board);
-	players[1] = new Character("player2.obj", board);
-	players[2] = new Character("player3.obj", board);
-	players[3] = new Character("player4.obj", board);
+	players[1] = new AICharacter("player2.obj", board, astar);
+	players[2] = new AICharacter("player3.obj", board, astar);
+	players[3] = new AICharacter("player4.obj", board, astar);
 	players[0]->setup(1, 1);
 	players[1]->setup(15, 15);
 	players[2]->setup(1, 15);

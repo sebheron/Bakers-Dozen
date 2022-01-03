@@ -1,8 +1,11 @@
 #include "Character.h"
 
-Character::Character(std::string file, Board* board)
+std::vector<Character*> Character::players;
+
+Character::Character(std::string file, Board* board) : Point::Point()
 {
-	players.push_front(this);
+	players.push_back(this);
+	id = players.size();
 	power = 1;
 	piercing = 0;
 	this->board = board;
@@ -25,17 +28,19 @@ void Character::update(float deltaTime)
 {
 	if (!living)
 		return;
+	else
+		living = !board->checkExplosionOccured(x, y);
 	if (moving) {
 		jumpTo(glm::vec3(x, 0, y), deltaTime * 10);
 	}
 }
 
-void Character::sendMove(int x, int y) {
+bool Character::sendMove(int x, int y) {
 	if (!living)
-		return;
+		return false;
 	if (!moving && (x != 0 || y != 0) && abs(x) + abs(y) < 2) {
 		if (board->checkPlaceBlocked(this->x + x, this->y + y))
-			return;
+			return false;
 
 		if (x > 0) {
 			setRotation(0, 270, 0);
@@ -54,6 +59,8 @@ void Character::sendMove(int x, int y) {
 		this->y += y;
 		moving = true;
 	}
+
+	return true;
 }
 
 void Character::placeBomb()
@@ -91,8 +98,10 @@ void Character::takePickup(Pickup* pickup)
 }
 
 void Character::draw() {
-	model.setPosition(position.x * 2 - 15, position.y + 0.2, position.z * 2 - 15);
-	model.drawFaces();
+	if (living) {
+		model.setPosition(position.x * 2 - 15, position.y + 0.2, position.z * 2 - 15);
+		model.drawFaces();
+	}
 }
 
 void Character::jumpTo(glm::vec3 b, float t) {
@@ -107,7 +116,7 @@ void Character::jumpTo(glm::vec3 b, float t) {
 	setScale(1, 1 - animCo / 4, 1);
 	position = glm::vec3(currentX, currentY, currentZ);
 
-	if (abs(dx) < 0.05f & abs(dz) < 0.05f) {
+	if (abs(dx) < 0.05f && abs(dz) < 0.05f) {
 		if (board->checkPlacePickup(x, y)) {
 			takePickup((Pickup*)board->getGridItem(x, y));
 		}
@@ -152,4 +161,9 @@ glm::vec3 Character::getPosition()
 float Character::getPowerLevel() {
 	float level = piercing + power + bombs.size();
 	return level;
+}
+
+int Character::getId()
+{
+	return id;
 }

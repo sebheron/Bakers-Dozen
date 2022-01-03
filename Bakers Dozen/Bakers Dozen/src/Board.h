@@ -25,6 +25,8 @@ public:
 	bool checkPlaceBlocked(int x, int y);
 	bool checkPlaceBomb(int x, int y);
 	bool checkPlacePickup(int x, int y);
+	bool checkPlaceBreakableBlocked(int x, int y);
+	bool checkExplosionOccured(int x, int y);
 	GridItem* getGridItem(int x, int y);
 
 	void addBomb(int x, int y, Bomb* bomb);
