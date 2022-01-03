@@ -27,6 +27,15 @@ struct Path {
 	bool operator!= (const Path& right) const { return length != right.length; }
 };
 
+struct compareN
+{
+	Node* key;
+	compareN(Node* key) : key(key) {}
+	bool operator()(Node* node) {
+		return (node->x == key->x && node->y == key->y);
+	}
+};
+
 class AStar {
 private:
 	Board* board;

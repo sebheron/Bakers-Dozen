@@ -35,12 +35,12 @@ void Character::update(float deltaTime)
 	}
 }
 
-void Character::sendMove(int x, int y) {
+bool Character::sendMove(int x, int y) {
 	if (!living)
-		return;
+		return false;
 	if (!moving && (x != 0 || y != 0) && abs(x) + abs(y) < 2) {
 		if (board->checkPlaceBlocked(this->x + x, this->y + y))
-			return;
+			return false;
 
 		if (x > 0) {
 			setRotation(0, 270, 0);
@@ -59,6 +59,8 @@ void Character::sendMove(int x, int y) {
 		this->y += y;
 		moving = true;
 	}
+
+	return true;
 }
 
 void Character::placeBomb()
