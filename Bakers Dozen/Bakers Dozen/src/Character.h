@@ -28,7 +28,7 @@ public:
 	virtual void update(float deltaTime);
 	void draw();
 	void jumpTo(glm::vec3 b, float t);
-	bool sendMove(int x, int y);
+	void sendMove(int x, int y);
 	void placeBomb();
 	void takePickup(Pickup* pickup);
 

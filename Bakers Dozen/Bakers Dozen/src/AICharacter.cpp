@@ -7,7 +7,7 @@ AICharacter::AICharacter(std::string file, Board * board, AStar* astar) : astar(
 	lastState = Thinking;
 	waitX = 0;
 	waitY = 0;
-	waitTime = 1.5 / this->intelligence;
+	waitTime = 4 / this->intelligence;
 }
 
 void AICharacter::update(float deltaTime)
@@ -79,7 +79,7 @@ void AICharacter::update(float deltaTime)
 		}
 		else {
 			state = Thinking;
-			waitTime = 1.5f / intelligence;
+			waitTime = 4 / intelligence;
 		}
 	}
 	else if (state == Hiding) {
@@ -101,7 +101,7 @@ void AICharacter::update(float deltaTime)
 				}
 				if (!moving) {
 					state = Thinking;
-					waitTime = 1 / intelligence;
+					waitTime = 4 / intelligence;
 				}
 			}
 		}
@@ -113,20 +113,22 @@ void AICharacter::update(float deltaTime)
 		if (checkForBombs(x, y) || !checkForBombs(waitX, waitY))
 		{
 			state = Thinking;
-			waitTime = 1.5f / intelligence;
+			waitTime = 4 / intelligence;
 		}
 	}
-	waitTime -= deltaTime;
+	waitTime -= deltaTime/2.;
 }
 
 std::stack<Node*> AICharacter::findPathToSafePosition(int skip)
 {
-	std::list<Path> paths;
+	int i = 0;
+	std::set<Path> paths;
 	for (int xx = 0; xx < BOARD_SIZE; xx++) {
 		for (int yy = 0; yy < BOARD_SIZE; yy++) {
 			if (!(x == xx && y == yy) && !board->checkPlaceBlocked(xx, yy) && !checkForBombs(xx, yy) && !checkForPlayers(xx, yy)) {
 				std:stack<Node*> path = astar->getPath(x, y, xx, yy);
-				paths.push_back(Path
+				paths.emplace(
+					Path
 					{ 
 						path.size(), path
 					}
@@ -134,8 +136,6 @@ std::stack<Node*> AICharacter::findPathToSafePosition(int skip)
 			}
 		}
 	}
-	int i = 0;
-	paths.sort();
 	for (Path path : paths) {
 		if (i > skip && path.length > 0) {
 			return path.path;
@@ -165,7 +165,6 @@ std::vector<Pickup*> AICharacter::checkForRelativePickups()
 }
 
 bool AICharacter::checkForBombs(int x, int y) {
-	std::vector<Bomb*> bombs;
 	for (int yy = 0; yy < BOARD_SIZE; yy++) {
 		for (int xx = 0; xx < BOARD_SIZE; xx++) {
 			if ((xx == x || y == yy) && board->checkPlaceBomb(xx, yy)) {

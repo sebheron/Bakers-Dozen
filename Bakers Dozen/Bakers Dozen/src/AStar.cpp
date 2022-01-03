@@ -162,7 +162,7 @@ std::stack<Node*> AStar::getBreakablePath(int x1, int y1, int x2, int y2)
 		}
 	}
 
-	if (std::find_if(closed.begin(), closed.end(), compareN(end)) == closed.end())
+	if (std::find(closed.begin(), closed.end(), end) == closed.end())
 	{
 		return path;
 	}
