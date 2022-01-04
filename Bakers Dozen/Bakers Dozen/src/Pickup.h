@@ -7,7 +7,7 @@
 #ifndef PICKUP_H
 #define PICKUP_H
 
-enum PickupType {bomb, powerup, pierce};
+enum PickupType {powerup, pierce};
 
 class Pickup : public GridItem {
 private:

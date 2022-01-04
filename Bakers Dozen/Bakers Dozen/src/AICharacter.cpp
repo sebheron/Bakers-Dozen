@@ -19,7 +19,7 @@ void AICharacter::update(float deltaTime)
 		if (checkForBombs(x, y)) {
 			waitX = x;
 			waitY = y;
-			currentPath = findPathToSafePosition();
+			currentPath = findPathToSafePosition((int)Random::Range(0, 2.9));
 			if (currentPath.size() > 0)
 				state = Hiding;
 		}
@@ -44,15 +44,23 @@ void AICharacter::update(float deltaTime)
 				}
 			}
 		}
+		else {
+			currentPath = astar->getPath(x, y, startX, startY);
+			if (currentPath.size() > 0) {
+				state = Seeking;
+			}
+		}
 		lastState = state;
 	}
-	else if (currentPath.size() <= 0) {
-		state = Thinking;
-	}
 	else if (state == Bombing) {
-		placeBomb();
-		state = Thinking;
-		waitTime = 1 / intelligence;
+		if (getBombsAvailable() > 0) {
+			placeBomb();
+			state = Thinking;
+			waitTime = 1 / intelligence;
+		}
+		else {
+			state = Thinking;
+		}
 	}
 	else if (state == Seeking) {
 		if (currentPath.size() > 0) {
@@ -112,7 +120,7 @@ void AICharacter::update(float deltaTime)
 		}
 	}
 	else if (state == Waiting) {
-		if (checkForBombs(x, y) || !checkForBombs(waitX, waitY))
+		if (!board->checkPlaceBomb(waitX, waitY))
 		{
 			state = Thinking;
 			waitTime = 1.5f / intelligence;
@@ -123,12 +131,12 @@ void AICharacter::update(float deltaTime)
 
 std::stack<Node*> AICharacter::findPathToSafePosition(int skip)
 {
-	std::list<Path> paths;
+	std::set<Path> paths;
 	for (int xx = 0; xx < BOARD_SIZE; xx++) {
 		for (int yy = 0; yy < BOARD_SIZE; yy++) {
 			if (!(x == xx && y == yy) && !board->checkPlaceBlocked(xx, yy) && !checkForBombs(xx, yy) && !checkForPlayers(xx, yy)) {
 				std:stack<Node*> path = astar->getPath(x, y, xx, yy);
-				paths.push_back(Path
+				paths.insert(Path
 					{ 
 						path.size(), path
 					}
@@ -137,12 +145,13 @@ std::stack<Node*> AICharacter::findPathToSafePosition(int skip)
 		}
 	}
 	int i = 0;
-	paths.sort();
-	for (Path path : paths) {
-		if (i > skip && path.length > 0) {
+	while (!paths.empty()) {
+		Path path = *paths.begin();
+		if (i > skip || paths.size() == 1) {
 			return path.path;
 		}
 		i++;
+		paths.erase(path);
 	}
 	return std::stack<Node*>();
 }
@@ -173,7 +182,7 @@ bool AICharacter::checkForBombs(int x, int y) {
 			if ((xx == x || y == yy) && board->checkPlaceBomb(xx, yy)) {
 				float dis = getDistance(x, y, xx, yy);
 				Bomb* bomb = (Bomb*)board->getGridItem(xx, yy);
-				if (*bomb->power >= dis) {
+				if (bomb->power >= dis) {
 					return true;
 				}
 			}
@@ -206,10 +215,6 @@ bool AICharacter::getIsPlayerAt(int x, int y) {
 	return false;
 }
 
-bool AICharacter::isPlayerThreat(Character* player) {
-	return getPowerLevel() <= player->getPowerLevel();
-}
-
 Character* AICharacter::getNearestPlayer() {
 	Character* bestTarget = 0;
 	float closest = INFINITY;
@@ -226,13 +231,7 @@ Character* AICharacter::getNearestPlayer() {
 
 int AICharacter::getBombsAvailable()
 {
-	int b = 0;
-	for (Bomb* bomb : bombs) {
-		if (bomb->isExploding()) {
-			b++;
-		}
-	}
-	return b;
+	return bombs.size();
 }
 
 float AICharacter::getDistance(int x1, int y1, int x2, int y2)

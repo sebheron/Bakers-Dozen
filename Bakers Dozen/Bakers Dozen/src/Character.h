@@ -5,11 +5,14 @@
 #include "ofxAssimpModelLoader.h"
 #include "Board.h"
 #include "GridItem.h"
-#include "Bomb.h"
 #include "Pickup.h"
 
 #ifndef CHARACTER_H
 #define CHARACTER_H
+
+struct PocketBomb {
+	int power, piercing;
+};
 
 class Character : public Point {
 protected:
@@ -18,9 +21,8 @@ protected:
 	float angle;
 	bool moving, living;
 	Board* board;
-	std::list<Bomb*> bombs;
-	int power, piercing;
-	int id;
+	std::stack<PocketBomb*> bombs;
+	int id, power, piercing, startX, startY;
 public:
 	Character(std::string file, Board* board);
 
@@ -36,7 +38,6 @@ public:
 	void setScale(float x, float y, float z);
 
 	glm::vec3 getPosition();
-	float getPowerLevel();
 
 	int getId();
 	

@@ -9,7 +9,7 @@ class GridItem : public Point {
 protected:
 	bool active, traversable, triggerExplosion, breakable, canExplode;
 public:
-	GridItem(bool traversable = true, bool triggerExplosion = false, bool breakable = false);
+	GridItem(bool traversable = true, bool canExplode = false, bool breakable = false);
 
 	virtual void setup(int x, int y, bool active);
 	virtual void update(float deltaTime);

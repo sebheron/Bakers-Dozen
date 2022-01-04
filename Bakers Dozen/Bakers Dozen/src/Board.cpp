@@ -72,8 +72,8 @@ void Board::draw()
 
 void Board::calculateExplosion(Bomb* bomb, int x, int y)
 {
-	int power = *bomb->power;
-	int piercing = *bomb->piercing;
+	int power = bomb->power;
+	int piercing = bomb->piercing;
 
 	explodeLine(x, y, 1, 0, power, piercing);
 	explodeLine(x, y, 0, 1, power, piercing);
@@ -168,11 +168,11 @@ GridItem * Board::getGridItem(int x, int y)
 	return 0;
 }
 
-void Board::addBomb(int x, int y, Bomb* bomb)
+void Board::addBomb(int x, int y, int power, int piercing)
 {
 	if (x > BOARD_SIZE - 1 | y > BOARD_SIZE - 1 | x < 0 | y < 0)
 		return;
 	int i = y * BOARD_SIZE + x;
-	blocks[i] = bomb;
+	blocks[i] = new Bomb(power, piercing);
 	blocks[i]->setup(x, y, true);
 }

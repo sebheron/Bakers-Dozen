@@ -29,7 +29,6 @@ public:
 	bool checkForBombs(int x, int y);
 	bool checkForPlayers(int x, int y);
 	bool getIsPlayerAt(int x, int y);
-	bool isPlayerThreat(Character* player);
 	Character* getNearestPlayer();
 	int getBombsAvailable();
 	float getDistance(int x1, int y1, int x2, int y2);

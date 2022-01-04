@@ -4,15 +4,12 @@ Pickup::Pickup() : GridItem::GridItem(true, false, true)
 {
 	model.loadModel("bomb.obj", 20);
 	model.setScaleNormalization(false);
-	float r = Random::Range(0, 3);
+	float r = Random::Range(0, 2);
 	if (r < 1) {
-		type = bomb;
+		type = pierce;
 	}
 	else if (r < 2) {
 		type = powerup;
-	}
-	else if (r < 3) {
-		type = pierce;
 	}
 }
 

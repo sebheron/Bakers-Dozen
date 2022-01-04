@@ -16,10 +16,11 @@ Character::Character(std::string file, Board* board) : Point::Point()
 
 void Character::setup(int x, int y)
 {
-	this->x = x;
-	this->y = y;
+	startX = x;
+	startY = y;
+	this->x = startX;
+	this->y = startY;
 	position = glm::vec3(x, 0, y);
-	bombs.push_front(new Bomb(&power, &piercing));
 	moving = false;
 	living = true;
 }
@@ -32,6 +33,9 @@ void Character::update(float deltaTime)
 		living = !board->checkExplosionOccured(x, y);
 	if (moving) {
 		jumpTo(glm::vec3(x, 0, y), deltaTime * 10);
+	}
+	else if (x == startX && y == startY && bombs.empty()) {
+		bombs.push(new PocketBomb{ power, piercing });
 	}
 }
 
@@ -67,16 +71,13 @@ void Character::placeBomb()
 {
 	if (!living)
 		return;
-	for (Bomb* bomb : bombs) {
-		//Round the positions to provide a fluid positioning of the bombs.
-		int roundedX = round(x);
-		int roundedY = round(y);
+	if (!bombs.empty()) {
+		PocketBomb* bomb = bombs.top();
 		//Check for the unlikely event that a bomb has been placed below the characters feet.
-		if (!board->checkPlaceBlocked(roundedX, roundedY)
-			&& bomb->isExploding()) {
-			bomb->explode(true);
-			board->addBomb(roundedX, roundedY, bomb);
+		if (!board->checkPlaceBlocked(x, y)) {
+			board->addBomb(x, y, bomb->power, bomb->piercing);
 		}
+		bombs.pop();
 	}
 }
 
@@ -84,9 +85,6 @@ void Character::takePickup(Pickup* pickup)
 {
 	PickupType type = pickup->getType();
 	switch (type) {
-	case bomb:
-		bombs.push_front(new Bomb(&power, &piercing));
-		break;
 	case powerup:
 		power++;
 		break;
@@ -156,11 +154,6 @@ void Character::setScale(float x, float y, float z)
 glm::vec3 Character::getPosition()
 {
 	return position;
-}
-
-float Character::getPowerLevel() {
-	float level = piercing + power + bombs.size();
-	return level;
 }
 
 int Character::getId()
