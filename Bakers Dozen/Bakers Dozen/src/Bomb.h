@@ -12,7 +12,7 @@ private:
 	ofxAssimpModelLoader model;
 	float scale;
 public:
-	Bomb(int power, int piercing);
+	Bomb(int power, int piercing, float angle);
 
 	void setup(int x, int y, bool active) override;
 	void update(float deltaTime) override;

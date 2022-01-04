@@ -81,7 +81,7 @@ void Character::placeBomb()
 		PocketBomb* bomb = bombs.top();
 		//Check for the unlikely event that a bomb has been placed below the characters feet.
 		if (!board->checkPlaceBlocked(x, y)) {
-			board->addBomb(x, y, bomb->power, bomb->piercing);
+			board->addBomb(x, y, bomb->power, bomb->piercing, p_model.getRotationAngle(0));
 		}
 		bombs.pop();
 	}

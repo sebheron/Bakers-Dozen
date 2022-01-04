@@ -168,11 +168,11 @@ GridItem * Board::getGridItem(int x, int y)
 	return 0;
 }
 
-void Board::addBomb(int x, int y, int power, int piercing)
+void Board::addBomb(int x, int y, int power, int piercing, float angle)
 {
 	if (x > BOARD_SIZE - 1 | y > BOARD_SIZE - 1 | x < 0 | y < 0)
 		return;
 	int i = y * BOARD_SIZE + x;
-	blocks[i] = new Bomb(power, piercing);
+	blocks[i] = new Bomb(power, piercing, angle);
 	blocks[i]->setup(x, y, true);
 }

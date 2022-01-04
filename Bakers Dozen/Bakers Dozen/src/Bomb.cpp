@@ -1,8 +1,9 @@
 #include "Bomb.h"
 
-Bomb::Bomb(int power, int piercing) : scale(0.9), power(power), piercing(piercing), GridItem::GridItem(false, true, true)
+Bomb::Bomb(int power, int piercing, float angle) : scale(0.9), power(power), piercing(piercing), GridItem::GridItem(false, true, true)
 {
 	model.loadModel("bread.obj", 20);
+	model.setRotation(0, angle, 0, 1, 0);
 	model.setScaleNormalization(false);
 }
 

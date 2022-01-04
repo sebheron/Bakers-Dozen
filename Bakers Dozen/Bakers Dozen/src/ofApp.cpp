@@ -57,14 +57,15 @@ void ofApp::update(){
 	players[0]->sendMove(x, y);
 	if (bomb) {
 		players[0]->placeBomb();
+		keys[OF_KEY_RIGHT_SHIFT] = false;
 	}
+
+	board->update(deltaTime);
 
 	players[0]->update(deltaTime);
 	players[1]->update(deltaTime);
 	players[2]->update(deltaTime);
 	players[3]->update(deltaTime);
-
-	board->update(deltaTime);
 }
 
 void ofApp::draw(){

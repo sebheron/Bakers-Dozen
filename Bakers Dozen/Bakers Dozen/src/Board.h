@@ -29,7 +29,7 @@ public:
 	bool checkExplosionOccured(int x, int y);
 	GridItem* getGridItem(int x, int y);
 
-	void addBomb(int x, int y, int power, int piercing);
+	void addBomb(int x, int y, int power, int piercing, float angle);
 };
 
 #endif // BOARD_H
