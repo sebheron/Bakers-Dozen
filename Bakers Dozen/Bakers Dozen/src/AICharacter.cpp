@@ -95,9 +95,6 @@ void AICharacter::update(float deltaTime)
 	else if (state == Hiding) {
 		if (currentPath.size() > 0) {
 			Node* node = currentPath.top();
-			//if (bombDetonate && CheckForBombs(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z)).Count <= 0) {
-			//	DetonateBombs();
-			//}
 			if (node->x == x && node->y == y) {
 				currentPath.pop();
 			}
@@ -161,8 +158,6 @@ std::vector<Pickup*> AICharacter::checkForRelativePickups()
 	std::vector<Pickup*> pickups;
 	for (int xx = 0; xx < BOARD_SIZE; xx++) {
 		for (int yy = 0; yy < BOARD_SIZE; yy++) {
-			//TODO: add check for obtained powerups, ignoring those which are already collected.
-			//!ObtainedPowerup(Board[xx, yy].GetComponent<PickupController>())
 			if (board->checkPlacePickup(xx, yy)) {
 				size_t pathSize = astar->getPath(x, y, xx, yy).size();
 				if (pathSize > 0 && pathSize < 8) {
