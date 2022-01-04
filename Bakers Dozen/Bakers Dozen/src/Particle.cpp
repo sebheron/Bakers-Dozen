@@ -32,6 +32,6 @@ void Particle::draw()
 {
 	if (lifetime > 0) {
 		ofSetColor(255, g, 0);
-		ofDrawSphere(position, 3.5 * lifetime);
+		ofDrawIcoSphere(position, 3.5 * lifetime);
 	}
 }

@@ -16,7 +16,7 @@ struct PocketBomb {
 
 class Character : public Point {
 protected:
-	ofxAssimpModelLoader model;
+	ofxAssimpModelLoader p_model, r_model;
 	glm::vec3 position;
 	float angle;
 	bool moving, living;
@@ -37,8 +37,8 @@ public:
 	void setRotation(float x, float y, float z);
 	void setScale(float x, float y, float z);
 
+	bool getLiving();
 	glm::vec3 getPosition();
-
 	int getId();
 	
 	static std::vector<Character*> players;

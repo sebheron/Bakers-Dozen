@@ -1,6 +1,7 @@
 #pragma once
 
 #include "ofxAssimpModelLoader.h"
+#include "ofMain.h"
 #include "GridItem.h"
 #include "Random.h"
 
@@ -18,7 +19,6 @@ public:
 	Pickup();
 
 	void setup(int x, int y, bool active) override;
-	void update(float deltaTime) override;
 	void draw() override;
 
 	PickupType getType();

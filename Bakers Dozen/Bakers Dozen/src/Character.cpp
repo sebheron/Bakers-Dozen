@@ -9,9 +9,12 @@ Character::Character(std::string file, Board* board) : Point::Point()
 	power = 1;
 	piercing = 0;
 	this->board = board;
-	model.loadModel(file, 20);
-	model.setScaleNormalization(false);
-	model.setScale(2.5, 2.5, 2.5);
+	p_model.loadModel(file, 20);
+	p_model.setScaleNormalization(false);
+	p_model.setScale(2.5, 2.5, 2.5);
+	r_model.loadModel("oven.obj", 20);
+	r_model.setScaleNormalization(false);
+	r_model.setScale(0.9, 0.9, 0.9);
 }
 
 void Character::setup(int x, int y)
@@ -20,6 +23,7 @@ void Character::setup(int x, int y)
 	startY = y;
 	this->x = startX;
 	this->y = startY;
+	r_model.setPosition(startX * 2 - 15, -0.75, startY * 2 - 15);
 	position = glm::vec3(x, 0, y);
 	moving = false;
 	living = true;
@@ -30,11 +34,13 @@ void Character::update(float deltaTime)
 	if (!living)
 		return;
 	else
-		living = !board->checkExplosionOccured(x, y);
+		living = !board->checkExplosionOccured(roundf(position.x), roundf(position.z));
 	if (moving) {
 		jumpTo(glm::vec3(x, 0, y), deltaTime * 10);
 	}
 	else if (x == startX && y == startY && bombs.empty()) {
+		bombs.push(new PocketBomb{ power, piercing });
+		bombs.push(new PocketBomb{ power, piercing });
 		bombs.push(new PocketBomb{ power, piercing });
 	}
 }
@@ -97,8 +103,12 @@ void Character::takePickup(Pickup* pickup)
 
 void Character::draw() {
 	if (living) {
-		model.setPosition(position.x * 2 - 15, position.y + 0.2, position.z * 2 - 15);
-		model.drawFaces();
+		p_model.setPosition(position.x * 2 - 15, position.y + 0.2, position.z * 2 - 15);
+		p_model.drawFaces();
+		if (bombs.empty()) {
+			r_model.setRotation(0, ofGetElapsedTimeMillis() / 150, 0, 1, 0);
+			r_model.drawFaces();
+		}
 	}
 }
 
@@ -138,17 +148,22 @@ void Character::setRotation(float x, float y, float z)
 	//If we need to set an angle.
 	if (angle > 0) {
 		//Calculate rotation according to angle.
-		model.setRotation(0, angle, x / angle, y / angle, z / angle);
+		p_model.setRotation(0, angle, x / angle, y / angle, z / angle);
 	}
 	else {
-		model.setRotation(0, angle, x, y, z);
+		p_model.setRotation(0, angle, x, y, z);
 	}
 }
 
 void Character::setScale(float x, float y, float z)
 {
 	//Half the scale.
-	model.setScale(x * 2.5, y * 2.5, z * 2.5);
+	p_model.setScale(x * 2.5, y * 2.5, z * 2.5);
+}
+
+bool Character::getLiving()
+{
+	return living;
 }
 
 glm::vec3 Character::getPosition()
