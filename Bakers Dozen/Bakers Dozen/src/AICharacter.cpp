@@ -31,15 +31,17 @@ void AICharacter::update(float deltaTime)
 		else if (pickups.size() > 0) {
 			objective = pickups.at(0);
 			currentPath = astar->getPath(x, y, objective->getX(), objective->getY());
-			if (currentPath.size() > 0)
+			if (currentPath.size() > 0) {
 				state = Seeking;
+			}
 		}
 		else if (getBombsAvailable() > 0) {
 			objective = getNearestPlayer();
 			if (objective > 0) {
 				currentPath = astar->getBreakablePath(x, y, objective->getX(), objective->getY());
-				if (currentPath.size() > 0)
+				if (currentPath.size() > 0) {
 					state = Seeking;
+				}
 			}
 		}
 		lastState = state;

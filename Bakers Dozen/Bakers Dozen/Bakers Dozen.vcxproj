@@ -145,12 +145,12 @@ C:\Users\Sebhe\Documents\of_v0.11.2_vs2017_release\addons\ofxGui\src;%(Additiona
     </ClCompile>
     <Link>
       <IgnoreAllDefaultLibraries>false</IgnoreAllDefaultLibraries>
-      <GenerateDebugInformation>false</GenerateDebugInformation>
+      <GenerateDebugInformation>true</GenerateDebugInformation>
       <SubSystem>Console</SubSystem>
       <OptimizeReferences>true</OptimizeReferences>
       <EnableCOMDATFolding>true</EnableCOMDATFolding>
       <RandomizedBaseAddress>false</RandomizedBaseAddress>
-      <AdditionalDependencies>C:\Users\Sebhe\Documents\of_v0.11.2_vs2017_release\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32\assimp32.lib;C:\Users\Sebhe\Documents\of_v0.11.2_vs2017_release\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32\assimp32.dll;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>C:\Users\Sebhe\Documents\of_v0.11.2_vs2017_release\addons\ofxAssimpModelLoader\libs\assimp\lib\vs\Win32\assimp32.lib;%(AdditionalDependencies)</AdditionalDependencies>
       <AdditionalLibraryDirectories>%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
     </Link>
     <PostBuildEvent>

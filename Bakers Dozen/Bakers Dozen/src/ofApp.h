@@ -38,8 +38,6 @@ class ofApp : public ofBaseApp{
 
 		Character* players[4];
 
-		Explosion* exp;
-
 		unsigned int keys[65536];
 };
 

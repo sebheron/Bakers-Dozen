@@ -1,15 +1,15 @@
 #include "Explosion.h"
 
-Explosion::Explosion() : exploded(false) {}
+Explosion::Explosion() : exploded(false), time(0) {
+	for (int i = 0; i < PARTICLE_COUNT; i++) {
+		particles[i] = new Particle();
+	}
+}
 
 void Explosion::setup(int x, int y)
 {
 	this->x = x;
 	this->y = y;
-
-	for (int i = 0; i < PARTICLE_COUNT; i++) {
-		particles[i] = new Particle();
-	}
 }
 
 void Explosion::explode()

@@ -40,8 +40,6 @@ void ofApp::setup(){
 	players[2]->setup(1, 15);
 	players[3]->setup(15, 1);
 
-	exp = new Explosion();
-
 	light.enable();
 	light.setPosition(0, -30, 0);
 	light.lookAt(glm::vec3(0, 1, 0));
@@ -60,8 +58,6 @@ void ofApp::update(){
 	if (bomb) {
 		players[0]->placeBomb();
 	}
-
-	exp->update(deltaTime);
 
 	players[0]->update(deltaTime);
 	players[1]->update(deltaTime);
@@ -82,7 +78,6 @@ void ofApp::draw(){
 	floorImage.unbind();
 	
 	board->draw();
-	exp->draw();
 
 	players[0]->draw();
 	players[1]->draw();
@@ -115,8 +110,6 @@ void ofApp::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void ofApp::mousePressed(int x, int y, int button){
-	exp->setup(0, 0);
-	exp->explode();
 }
 
 //--------------------------------------------------------------

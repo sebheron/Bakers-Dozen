@@ -1,6 +1,7 @@
 #include "Particle.h"
 
-Particle::Particle() {}
+Particle::Particle() : lifetime(0) {
+}
 
 void Particle::setup(float x, float y, ParticleColor color, float fx, float fy, float fz, float lifetime)
 {
@@ -29,6 +30,8 @@ void Particle::update(float deltaTime)
 
 void Particle::draw()
 {
-	ofSetColor(255, g, 0);
-	ofDrawSphere(position, 2 * lifetime);
+	if (lifetime > 0) {
+		ofSetColor(255, g, 0);
+		ofDrawSphere(position, 3.5 * lifetime);
+	}
 }
