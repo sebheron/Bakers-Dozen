@@ -30,7 +30,6 @@ public:
 	bool checkForPlayers(int x, int y);
 	bool getIsPlayerAt(int x, int y);
 	Character* getNearestPlayer();
-	int getBombsAvailable();
 	float getDistance(int x1, int y1, int x2, int y2);
 };
 

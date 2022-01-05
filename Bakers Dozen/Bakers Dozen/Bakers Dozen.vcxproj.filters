@@ -85,6 +85,9 @@
     <ClCompile Include="src\AStar.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\PanelButtons.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -342,6 +345,12 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Node.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofxCenteredTrueTypeFont.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PanelButtons.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

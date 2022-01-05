@@ -2,7 +2,7 @@
 
 AICharacter::AICharacter(std::string file, Board * board, AStar* astar) : astar(astar), Character::Character(file, board)
 {
-	intelligence = (int)Random::Range(6, 16);
+	intelligence = (int)Random::Range(6, 9);
 	state = Thinking;
 	lastState = Thinking;
 	waitX = 0;
@@ -222,11 +222,6 @@ Character* AICharacter::getNearestPlayer() {
 		}
 	}
 	return bestTarget;
-}
-
-int AICharacter::getBombsAvailable()
-{
-	return bombs.size();
 }
 
 float AICharacter::getDistance(int x1, int y1, int x2, int y2)

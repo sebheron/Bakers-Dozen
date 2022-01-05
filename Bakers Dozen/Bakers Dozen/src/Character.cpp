@@ -6,8 +6,6 @@ Character::Character(std::string file, Board* board) : Point::Point()
 {
 	players.push_back(this);
 	id = players.size();
-	power = 1;
-	piercing = 0;
 	this->board = board;
 	p_model.loadModel(file, 20);
 	p_model.setScaleNormalization(false);
@@ -19,6 +17,8 @@ Character::Character(std::string file, Board* board) : Point::Point()
 
 void Character::setup(int x, int y)
 {
+	power = 1;
+	piercing = 0;
 	startX = x;
 	startY = y;
 	this->x = startX;
@@ -174,4 +174,9 @@ glm::vec3 Character::getPosition()
 int Character::getId()
 {
 	return id;
+}
+
+int Character::getBombsAvailable()
+{
+	return bombs.size();
 }

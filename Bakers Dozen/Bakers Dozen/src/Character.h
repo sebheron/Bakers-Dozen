@@ -40,6 +40,7 @@ public:
 	bool getLiving();
 	glm::vec3 getPosition();
 	int getId();
+	int getBombsAvailable();
 	
 	static std::vector<Character*> players;
 };

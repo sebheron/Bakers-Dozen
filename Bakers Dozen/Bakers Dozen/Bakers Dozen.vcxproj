@@ -204,6 +204,7 @@ C:\Users\Sebhe\Documents\of_v0.11.2_vs2017_release\addons\ofxGui\src;%(Additiona
     <ClCompile Include="src\Character.cpp" />
     <ClCompile Include="src\main.cpp" />
     <ClCompile Include="src\ofApp.cpp" />
+    <ClCompile Include="src\PanelButtons.cpp" />
     <ClCompile Include="src\Particle.cpp" />
     <ClCompile Include="src\Pickup.cpp" />
     <ClCompile Include="src\Point.cpp" />
@@ -278,6 +279,8 @@ C:\Users\Sebhe\Documents\of_v0.11.2_vs2017_release\addons\ofxGui\src;%(Additiona
     <ClInclude Include="src\Character.h" />
     <ClInclude Include="src\Node.h" />
     <ClInclude Include="src\ofApp.h" />
+    <ClInclude Include="src\ofxCenteredTrueTypeFont.h" />
+    <ClInclude Include="src\PanelButtons.h" />
     <ClInclude Include="src\Particle.h" />
     <ClInclude Include="src\Pickup.h" />
     <ClInclude Include="src\Point.h" />
