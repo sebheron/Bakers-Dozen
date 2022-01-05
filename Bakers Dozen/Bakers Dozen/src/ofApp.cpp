@@ -58,6 +58,7 @@ void ofApp::start()
 	light.disable();
 	ofDisableLighting();
 	currentScene = Menu;
+	ofResetElapsedTimeCounter();
 }
 
 void ofApp::begin()
@@ -87,11 +88,13 @@ void ofApp::update(){
 	float deltaTime = ofGetLastFrameTime();
 	switch (currentScene) {
 	case Menu:
-		if (buttons.get("Play")) {
-			begin();
-		}
-		else if (buttons.get("Quit")) {
-			exit();
+		if (ofGetElapsedTimeMillis() / 1000.0 > 0.1) {
+			if (buttons.get("Play")) {
+				begin();
+			}
+			else if (buttons.get("Quit")) {
+				ofExit();
+			}
 		}
 		break;
 	case End:
@@ -136,20 +139,20 @@ void ofApp::update(){
 void ofApp::draw(){
 	switch (currentScene) {
 	case Menu:
-		ofBackground(220, 220, 245);
+		ofBackground(0);
 		ofSetColor(80, 80, 100);
-		instructions.drawStringCenteredHorizontally("Baking is a competitive business and desperate times call for desperate measures...\nBrew up some bread bombs to take down your baker foes\nRemember to stock up be revisiting your corner.\nUse the arrows to move\nand spacebar to place a bomb.",
+		instructions.drawStringCenteredHorizontally("Baking is a competitive business and desperate times call for desperate measures...\nBake up some bread bombs to take down your baker foes\nRemember to stock up be revisiting your corner.\nUse the arrows to move\nand spacebar to place a bomb.\nCollect sugar to increase power and yeast to break through more blocks.",
 			ofGetWindowWidth() / 2 + 1, ofGetWindowHeight() / 2 - 29);
 		ofSetColor(100, 100, 150);
-		instructions.drawStringCenteredHorizontally("Baking is a competitive business and desperate times call for desperate measures...\nBrew up some bread bombs to take down your baker foes\nRemember to stock up be revisiting your corner.\nUse the arrows to move\nand spacebar to place a bomb.",
+		instructions.drawStringCenteredHorizontally("Baking is a competitive business and desperate times call for desperate measures...\nBake up some bread bombs to take down your baker foes\nRemember to stock up be revisiting your corner.\nUse the arrows to move\nand spacebar to place a bomb.\nCollect sugar to increase power and yeast to break through more blocks.",
 			ofGetWindowWidth()/2, ofGetWindowHeight()/2 - 30);
 		ofSetColor(255);
-		logo.draw(ofGetWindowWidth() / 2 - 283, 30);
+		logo.draw(ofGetWindowWidth() / 2 - 283, 30 + sin(ofGetElapsedTimeMillis() / 1000.0) * 20);
 		buttons.draw();
 		break;
 	case End:
 	case Game:
-		ofClear(50);
+		ofClear(0);
 		cam.begin();
 		ofEnableDepthTest();
 		ofPushMatrix();
