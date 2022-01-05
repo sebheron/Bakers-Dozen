@@ -124,7 +124,8 @@ void ofApp::update(){
 				Explosion* explosion = board->getExplosionAt(x, y);
 				if (explosion->exploded) {
 					for (Character* player : players) {
-						if (player->getX() == x && player->getY() == y) {
+						glm::vec3 pos = player->getPosition();
+						if (round(pos.x) == x && round(pos.z) == y) {
 							player->kill();
 						}
 					}
