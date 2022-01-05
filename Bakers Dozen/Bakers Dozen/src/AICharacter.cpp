@@ -14,6 +14,8 @@ void AICharacter::update(float deltaTime)
 {
 	Character::update(deltaTime);
 	
+	if (!living)
+		return;
 	if (state == Thinking && waitTime <= 0) {
 		std::vector<Pickup*> pickups = checkForRelativePickups();
 		if (checkForBombs(x, y)) {

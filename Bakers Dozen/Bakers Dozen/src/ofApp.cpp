@@ -42,7 +42,7 @@ void ofApp::setup(){
 	logo.load("logo.png");
 	bread.load("bread.png");
 
-	buttons.setup(&instructions, ofGetWindowWidth() / 2 - 300, ofGetWindowHeight() - 300, 600, 60);
+	buttons.setup(&instructions, ofGetWindowWidth() / 2 - 300, ofGetWindowHeight() - 180, 600, 60);
 	buttons.add("Play");
 	buttons.add("Quit");
 
@@ -142,12 +142,12 @@ void ofApp::draw(){
 		ofBackground(0);
 		ofSetColor(80, 80, 100);
 		instructions.drawStringCenteredHorizontally("Baking is a competitive business and desperate times call for desperate measures...\nBake up some bread bombs to take down your baker foes\nRemember to stock up be revisiting your corner.\nUse the arrows to move\nand spacebar to place a bomb.\nCollect sugar to increase power and yeast to break through more blocks.",
-			ofGetWindowWidth() / 2 + 1, ofGetWindowHeight() / 2 - 29);
+			ofGetWindowWidth() / 2 + 1, ofGetWindowHeight() / 2 + 1);
 		ofSetColor(100, 100, 150);
 		instructions.drawStringCenteredHorizontally("Baking is a competitive business and desperate times call for desperate measures...\nBake up some bread bombs to take down your baker foes\nRemember to stock up be revisiting your corner.\nUse the arrows to move\nand spacebar to place a bomb.\nCollect sugar to increase power and yeast to break through more blocks.",
-			ofGetWindowWidth()/2, ofGetWindowHeight()/2 - 30);
+			ofGetWindowWidth()/2, ofGetWindowHeight()/2);
 		ofSetColor(255);
-		logo.draw(ofGetWindowWidth() / 2 - 283, 30 + sin(ofGetElapsedTimeMillis() / 1000.0) * 20);
+		logo.draw(ofGetWindowWidth() / 2 - 283, 50 + sin(ofGetElapsedTimeMillis() / 1000.0) * 20);
 		buttons.draw();
 		break;
 	case End:
@@ -208,36 +208,7 @@ void ofApp::keyReleased(int key){
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
-}
-
-//--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
-}
-
-//--------------------------------------------------------------
 void ofApp::windowResized(int w, int h){
-	buttons.setup(&instructions, ofGetWindowWidth() / 2 - 300, ofGetWindowHeight() - 300, 600, 60);
+	buttons.setup(&instructions, ofGetWindowWidth() / 2 - 300, ofGetWindowHeight() - 180, 600, 60);
 	retry.setup(&instructions, ofGetWindowWidth() / 2 - 300, ofGetWindowHeight() - 300, 600, 60);
 }
