@@ -24,13 +24,13 @@ void AICharacter::update(float deltaTime)
 				state = Hiding;
 		}
 		else if (getIsPlayerAt(x, y)) {
-			currentPath = findPathToSafePosition((int)Random::Range(0, 2.9));
+			currentPath = findPathToSafePosition(2);
 			if (currentPath.size() > 0)
 				state = Hiding;
 		}
 		else if (pickups.size() > 0) {
 			objective = pickups.at(0);
-			currentPath = astar->getPath(x, y, objective->getX(), objective->getY());
+			currentPath = astar->getPath(x, y, objective->getX(), objective->getY(), id);
 			if (currentPath.size() > 0) {
 				state = Seeking;
 			}
@@ -45,7 +45,7 @@ void AICharacter::update(float deltaTime)
 			}
 		}
 		else {
-			currentPath = astar->getPath(x, y, startX, startY);
+			currentPath = astar->getPath(x, y, startX, startY, id);
 			if (currentPath.size() > 0) {
 				state = Seeking;
 			}
@@ -132,7 +132,7 @@ std::stack<Node*> AICharacter::findPathToSafePosition(int skip)
 	for (int xx = 0; xx < BOARD_SIZE; xx++) {
 		for (int yy = 0; yy < BOARD_SIZE; yy++) {
 			if (!(x == xx && y == yy) && !board->checkPlaceBlocked(xx, yy) && !checkForBombs(xx, yy) && !checkForPlayers(xx, yy)) {
-				std:stack<Node*> path = astar->getPath(x, y, xx, yy);
+				std:stack<Node*> path = astar->getPath(x, y, xx, yy, id);
 				paths.insert(Path
 					{ 
 						path.size(), path
@@ -159,10 +159,9 @@ std::vector<Pickup*> AICharacter::checkForRelativePickups()
 	for (int xx = 0; xx < BOARD_SIZE; xx++) {
 		for (int yy = 0; yy < BOARD_SIZE; yy++) {
 			if (board->checkPlacePickup(xx, yy)) {
-				size_t pathSize = astar->getPath(x, y, xx, yy).size();
+				size_t pathSize = astar->getPath(x, y, xx, yy, id).size();
 				if (pathSize > 0 && pathSize < 8) {
 					pickups.push_back((Pickup*)board->getGridItem(xx, yy));
-					std:stack<Node*> path = astar->getPath(x, y, xx, yy);
 				}
 			}
 		}

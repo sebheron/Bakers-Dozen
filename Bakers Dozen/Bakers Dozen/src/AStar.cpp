@@ -41,16 +41,16 @@ Node * AStar::getNodeAt(int x, int y, bool forcewalk)
 	return nodes[i];
 }
 
-std::vector<Node*> AStar::getNodes(Node* n)
+std::vector<Node*> AStar::getNodes(Node* n, int index)
 {
 	static int dx[4] = { 1, 0, 0, -1 };
 	static int dy[4] = { 0, -1, 1, 0 };
 
 	std::vector<Node*> nodes;
 
-	for (int i = 0; i < 4; i++) {
-		int xx = n->x + dx[i];
-		int yy = n->y + dy[i];
+	for (int i = index; i < 4 + index; i++) {
+		int xx = n->x + dx[i%4];
+		int yy = n->y + dy[i%4];
 
 		if (xx < BOARD_SIZE - 1 && xx > 0 && yy < BOARD_SIZE - 1 && yy > 0) {
 			nodes.push_back(getNodeAt(xx, yy));
@@ -61,7 +61,7 @@ std::vector<Node*> AStar::getNodes(Node* n)
 }
 
 
-std::stack<Node*> AStar::getPath(int x1, int y1, int x2, int y2)
+std::stack<Node*> AStar::getPath(int x1, int y1, int x2, int y2, int index)
 {
 	if (nodes[0] == 0)
 		readBoard();
@@ -85,7 +85,7 @@ std::stack<Node*> AStar::getPath(int x1, int y1, int x2, int y2)
 		current = open.front();
 		open.pop_front();
 		closed.push_back(current);
-		adj = getNodes(current);
+		adj = getNodes(current, index);
 
 		for(Node* n : adj)
 		{
@@ -147,7 +147,7 @@ std::stack<Node*> AStar::getBreakablePath(int x1, int y1, int x2, int y2)
 		current->breakable = breakable;
 		open.pop_front();
 		closed.push_back(current);
-		adj = getNodes(current);
+		adj = getNodes(current, 0);
 
 		for (Node* n : adj)
 		{

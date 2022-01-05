@@ -36,8 +36,8 @@ public:
 
 	void readBoard();
 	Node* getNodeAt(int x, int y, bool forcewalk = false);
-	std::vector<Node*> getNodes(Node* node);
-	std::stack<Node*> getPath(int x1, int y1, int x2, int y2);
+	std::vector<Node*> getNodes(Node* node, int index);
+	std::stack<Node*> getPath(int x1, int y1, int x2, int y2, int index);
 	std::stack<Node*> getBreakablePath(int x1, int y1, int x2, int y2);
 };
 
