@@ -26,10 +26,10 @@ public:
 	bool checkPlaceBomb(int x, int y);
 	bool checkPlacePickup(int x, int y);
 	bool checkPlaceBreakableBlocked(int x, int y);
-	bool checkExplosionOccured(int x, int y);
+	Explosion* getExplosionAt(int x, int y);
 	GridItem* getGridItem(int x, int y);
 
-	void addBomb(int x, int y, int power, int piercing, float angle);
+	bool addBomb(int x, int y, int power, int piercing, float angle);
 };
 
 #endif // BOARD_H

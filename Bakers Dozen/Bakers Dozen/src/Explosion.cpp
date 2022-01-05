@@ -26,7 +26,6 @@ void Explosion::explode()
 
 void Explosion::update(float deltaTime)
 {
-	exploded = false;
 	if (time > 0)
 	{
 		time -= deltaTime;

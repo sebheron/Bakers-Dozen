@@ -118,6 +118,21 @@ void ofApp::update(){
 
 		board->update(deltaTime);
 
+		//Brute force player deaths.
+		for (int y = 0; y < BOARD_SIZE; y++) {
+			for (int x = 0; x < BOARD_SIZE; x++) {
+				Explosion* explosion = board->getExplosionAt(x, y);
+				if (explosion->exploded) {
+					for (Character* player : players) {
+						if (player->getX() == x && player->getY() == y) {
+							player->kill();
+						}
+					}
+					explosion->exploded = false;
+				}
+			}
+		}
+
 		players[0]->update(deltaTime);
 		players[1]->update(deltaTime);
 		players[2]->update(deltaTime);

@@ -33,8 +33,6 @@ void Character::update(float deltaTime)
 {
 	if (!living)
 		return;
-	else
-		living = !board->checkExplosionOccured(roundf(position.x), roundf(position.z));
 	if (moving) {
 		jumpTo(glm::vec3(x, 0, y), deltaTime * 10);
 	}
@@ -82,8 +80,8 @@ void Character::placeBomb()
 		//Check for the unlikely event that a bomb has been placed below the characters feet.
 		if (!board->checkPlaceBlocked(x, y)) {
 			board->addBomb(x, y, bomb->power, bomb->piercing, p_model.getRotationAngle(0));
+			bombs.pop();
 		}
-		bombs.pop();
 	}
 }
 
@@ -110,6 +108,11 @@ void Character::draw() {
 			r_model.drawFaces();
 		}
 	}
+}
+
+void Character::kill()
+{
+	living = false;
 }
 
 void Character::jumpTo(glm::vec3 b, float t) {

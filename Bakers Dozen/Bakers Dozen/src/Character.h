@@ -29,6 +29,7 @@ public:
 	void setup(int x, int y);
 	virtual void update(float deltaTime);
 	void draw();
+	void kill();
 	void jumpTo(glm::vec3 b, float t);
 	bool sendMove(int x, int y);
 	void placeBomb();
