@@ -12,7 +12,7 @@ Pickup::Pickup() : GridItem::GridItem(true, false, true)
 		type = powerup;
 	}
 	model.setScaleNormalization(false);
-	model.setScale(0.9, 0.9, 0.9);
+	model.setScale(1.1, 1.1, 1.1);
 }
 
 void Pickup::setup(int x, int y, bool active)
