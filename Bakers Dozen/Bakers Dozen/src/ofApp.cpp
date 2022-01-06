@@ -157,10 +157,10 @@ void ofApp::draw(){
 	case Menu:
 		ofBackground(0);
 		ofSetColor(80, 80, 100);
-		instructions.drawStringCenteredHorizontally("Baking is a competitive business and desperate times call for desperate measures...\nBake up some bread bombs to take down your baker foes\nRemember to stock up be revisiting your corner.\nUse the arrows to move\nand spacebar to place a bomb.\nCollect sugar to increase power and yeast to break through more blocks.",
+		instructions.drawStringCenteredHorizontally("Baking is a competitive industry and desperate times call for desperate measures...\nBake up some bread bombs to take down your baker foes\nRemember to stock up by revisiting your corner.\nUse the arrows keys to move and spacebar to place a bomb.\nCollect sugar to increase power and yeast to break through more blocks.",
 			ofGetWindowWidth() / 2 + 1, ofGetWindowHeight() / 2 + 1);
 		ofSetColor(100, 100, 150);
-		instructions.drawStringCenteredHorizontally("Baking is a competitive business and desperate times call for desperate measures...\nBake up some bread bombs to take down your baker foes\nRemember to stock up be revisiting your corner.\nUse the arrows to move\nand spacebar to place a bomb.\nCollect sugar to increase power and yeast to break through more blocks.",
+		instructions.drawStringCenteredHorizontally("Baking is a competitive industry and desperate times call for desperate measures...\nBake up some bread bombs to take down your baker foes\nRemember to stock up by revisiting your corner.\nUse the arrows keys to move and spacebar to place a bomb.\nCollect sugar to increase power and yeast to break through more blocks.",
 			ofGetWindowWidth()/2, ofGetWindowHeight()/2);
 		ofSetColor(255);
 		logo.draw(ofGetWindowWidth() / 2 - 283, 50 + sin(ofGetElapsedTimeMillis() / 1000.0) * 20);

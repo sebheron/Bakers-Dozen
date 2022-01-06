@@ -156,7 +156,7 @@ std::stack<Node*> AStar::getBreakablePath(int x1, int y1, int x2, int y2)
 			{
 				n->parent = current;
 				n->distance = abs(n->x - end->x) + abs(n->y - end->y);
-				n->cost = n->weight + current->cost + (n->breakable ? 0.5 : 0);
+				n->cost = n->weight + current->cost + (n->breakable ? 1 : 0);
 				open.push_back(n);
 			}
 		}
