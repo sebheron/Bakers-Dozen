@@ -28,7 +28,7 @@ void AICharacter::update(float deltaTime)
 		else if (getIsPlayerAt(x, y)) {
 			currentPath = findPathToSafePosition(2);
 			if (currentPath.size() > 0)
-				state = Hiding;
+				state = Seeking;
 		}
 		else if (pickups.size() > 0) {
 			objective = pickups.at(0);
@@ -75,9 +75,10 @@ void AICharacter::update(float deltaTime)
 				if (dis > 1) {
 					state = Thinking;
 				}
-				if (!checkForPlayers(x, y)) {
+				int bombs = getBombsAvailable();
+				if (!checkForPlayers(x, y) || bombs <= 0) {
 					sendMove(node->x - x, node->y - y);
-					if (objective != getNearestPlayer()) {
+					if (bombs > 0 && objective != getNearestPlayer()) {
 						state = Thinking;
 					}
 					else if (!moving) {
@@ -192,7 +193,7 @@ bool AICharacter::checkForPlayers(int x, int y) {
 	for (Character* player : players) {
 		glm::vec3 playerPos = player->getPosition();
 		float dis = getDistance(playerPos.x, playerPos.z, startPos.x, startPos.z);
-		if (player->getId() != id && (playerPos.x == position.x || playerPos.z == position.z) && dis <= power) {
+		if (player->getId() != id && (playerPos.x == position.x || playerPos.z == position.z) && dis <= power - Random::Range(0, 2)) {
 			return true;
 		}
 	}
