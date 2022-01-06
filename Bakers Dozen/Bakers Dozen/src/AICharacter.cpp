@@ -21,7 +21,7 @@ void AICharacter::update(float deltaTime)
 		if (checkForBombs(x, y)) {
 			waitX = x;
 			waitY = y;
-			currentPath = findPathToSafePosition((int)Random::Range(0, 2.9));
+			currentPath = findPathToSafePosition((int)Random::Range(0, 8));
 			if (currentPath.size() > 0)
 				state = Hiding;
 		}
@@ -62,10 +62,12 @@ void AICharacter::update(float deltaTime)
 		}
 		else {
 			state = Thinking;
+			waitTime = 1.5f / intelligence;
 		}
 	}
 	else if (state == Seeking) {
 		if (currentPath.size() > 0) {
+			int bombs = getBombsAvailable();
 			Node* node = currentPath.top();
 			if (x == node->x && y == node->y) {
 				currentPath.pop();
@@ -74,14 +76,18 @@ void AICharacter::update(float deltaTime)
 				float dis = getDistance(node->x, node->y, x, y);
 				if (dis > 1) {
 					state = Thinking;
+					waitTime = 1.5f / intelligence;
 				}
-				int bombs = getBombsAvailable();
-				if (!checkForPlayers(x, y) || bombs <= 0) {
+				if (checkForBombs(x, y)) {
+					state = Thinking;
+				}
+				else if (!checkForPlayers(x, y) || bombs <= 0) {
 					sendMove(node->x - x, node->y - y);
 					if (bombs > 0 && objective != getNearestPlayer()) {
 						state = Thinking;
+						waitTime = 1.5f / intelligence;
 					}
-					else if (!moving) {
+					else if (bombs > 0 && !moving) {
 						state = Bombing;
 					}
 				}
@@ -105,6 +111,7 @@ void AICharacter::update(float deltaTime)
 				float dis = getDistance(x, y, node->x, node->y);
 				if (dis > 1) {
 					state = Thinking;
+					waitTime = 1.5f / intelligence;
 				}
 				if (!getIsPlayerAt(x, y)) {
 					sendMove(node->x - x, node->y - y);

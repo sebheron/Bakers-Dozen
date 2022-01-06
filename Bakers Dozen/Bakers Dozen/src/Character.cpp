@@ -117,6 +117,11 @@ void Character::draw() {
 			r_model.setRotation(0, ofGetElapsedTimeMillis() / 150, 0, 1, 0);
 			r_model.drawFaces();
 		}
+		if (id == 1 && ofGetElapsedTimeMillis() < 3000) {
+			ofSetColor(255, 0, 0);
+			ofDrawArrow(glm::vec3(position.x * 2 - 15, position.y - 4.5 + sin(ofGetElapsedTimeMillis() / 100.0) * 0.75, position.z * 2 - 15),
+				glm::vec3(position.x * 2 - 15, position.y - 3.5 + sin(ofGetElapsedTimeMillis() / 100.0) * 0.75, position.z * 2 - 15), 0.5);
+		}
 	}
 }
 

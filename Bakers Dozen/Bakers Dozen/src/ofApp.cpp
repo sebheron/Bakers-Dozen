@@ -116,7 +116,7 @@ void ofApp::update(){
 	float deltaTime = ofGetLastFrameTime();
 	switch (currentScene) {
 	case Menu:
-		if (ofGetElapsedTimeMillis() / 1000.0 > 0.1) {
+		if (ofGetElapsedTimeMillis() > 100) {
 			if (buttons.get("Play")) {
 				begin();
 			}
