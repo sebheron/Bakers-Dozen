@@ -50,6 +50,30 @@ void ofApp::setup(){
 	retry.add("Retry");
 	retry.add("Back");
 
+	deathSound.load("death.mp3");
+	deathSound.setMultiPlay(true);
+	explosionSound.load("explosion.mp3");
+	explosionSound.setMultiPlay(true);
+	powerupSound.load("powerup.mp3");
+	powerupSound.setMultiPlay(true);
+	walkSound.load("walk.mp3");
+	walkSound.setMultiPlay(true);
+	refillSound.load("refill.mp3");
+	refillSound.setMultiPlay(true);
+
+	themeMusic.load("theme.mp3");
+	themeMusic.setLoop(INFINITE);
+	themeMusic.setVolume(0.85);
+	gameMusic.load("game.mp3");
+	gameMusic.setLoop(INFINITE);
+	gameMusic.setVolume(0.85);
+
+	board->setSounds(&explosionSound);
+	players[0]->setSounds(&walkSound, &powerupSound, &refillSound);
+	players[1]->setSounds(&walkSound, &powerupSound, &refillSound);
+	players[2]->setSounds(&walkSound, &powerupSound, &refillSound);
+	players[3]->setSounds(&walkSound, &powerupSound, &refillSound);
+
 	start();
 }
 
@@ -59,6 +83,7 @@ void ofApp::start()
 	ofDisableLighting();
 	currentScene = Menu;
 	ofResetElapsedTimeCounter();
+	themeMusic.play();
 }
 
 void ofApp::begin()
@@ -72,12 +97,15 @@ void ofApp::begin()
 	players[1]->setup(15, 15);
 	players[2]->setup(1, 15);
 	players[3]->setup(15, 1);
+	themeMusic.stop();
+	gameMusic.play();
 	currentScene = Game;
 	ofResetElapsedTimeCounter();
 }
 
 void ofApp::death(bool won)
 {
+	gameMusic.stop();
 	ofResetElapsedTimeCounter();
 	this->won = won;
 	endText = won ? "SUCCESS\nAll other bakers have been ELIMINATED" : "DEAD\nLooks like the other bakers\nwill be taking your business";
@@ -127,6 +155,7 @@ void ofApp::update(){
 						glm::vec3 pos = player->getPosition();
 						if (round(pos.x) == x && round(pos.z) == y) {
 							player->kill();
+							deathSound.play();
 						}
 					}
 					explosion->exploded = false;
@@ -157,10 +186,10 @@ void ofApp::draw(){
 	case Menu:
 		ofBackground(0);
 		ofSetColor(80, 80, 100);
-		instructions.drawStringCenteredHorizontally("Baking is a competitive industry and desperate times call for desperate measures...\nBake up some bread bombs to take down your baker foes\nRemember to stock up by revisiting your corner.\nUse the arrows keys to move and spacebar to place a bomb.\nCollect sugar to increase power and yeast to break through more blocks.",
+		instructions.drawStringCenteredHorizontally("Baking is a competitive industry and desperate times call for desperate measures...\nBake up some bread bombs to take down your baker foes\nRemember to stock up by revisiting your oven.\nUse the arrows keys to move and spacebar to place a bomb.\nCollect sugar to increase power and yeast to break through more blocks.",
 			ofGetWindowWidth() / 2 + 1, ofGetWindowHeight() / 2 + 1);
 		ofSetColor(100, 100, 150);
-		instructions.drawStringCenteredHorizontally("Baking is a competitive industry and desperate times call for desperate measures...\nBake up some bread bombs to take down your baker foes\nRemember to stock up by revisiting your corner.\nUse the arrows keys to move and spacebar to place a bomb.\nCollect sugar to increase power and yeast to break through more blocks.",
+		instructions.drawStringCenteredHorizontally("Baking is a competitive industry and desperate times call for desperate measures...\nBake up some bread bombs to take down your baker foes\nRemember to stock up by revisiting your oven.\nUse the arrows keys to move and spacebar to place a bomb.\nCollect sugar to increase power and yeast to break through more blocks.",
 			ofGetWindowWidth()/2, ofGetWindowHeight()/2);
 		ofSetColor(255);
 		logo.draw(ofGetWindowWidth() / 2 - 283, 50 + sin(ofGetElapsedTimeMillis() / 1000.0) * 20);

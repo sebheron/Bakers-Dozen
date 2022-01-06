@@ -29,6 +29,13 @@ void Character::setup(int x, int y)
 	living = true;
 }
 
+void Character::setSounds(ofSoundPlayer * walkSound, ofSoundPlayer* powerupSound, ofSoundPlayer* refillSound)
+{
+	this->walkSound = walkSound;
+	this->powerupSound = powerupSound;
+	this->refillSound = refillSound;
+}
+
 void Character::update(float deltaTime)
 {
 	if (!living)
@@ -40,6 +47,7 @@ void Character::update(float deltaTime)
 		bombs.push(new PocketBomb{ power, piercing });
 		bombs.push(new PocketBomb{ power, piercing });
 		bombs.push(new PocketBomb{ power, piercing });
+		refillSound->play();
 	}
 }
 
@@ -65,6 +73,7 @@ bool Character::sendMove(int x, int y) {
 
 		this->x += x;
 		this->y += y;
+		walkSound->play();
 		moving = true;
 	}
 
@@ -96,6 +105,7 @@ void Character::takePickup(Pickup* pickup)
 		piercing++;
 		break;
 	}
+	powerupSound->play();
 	pickup->smash();
 }
 

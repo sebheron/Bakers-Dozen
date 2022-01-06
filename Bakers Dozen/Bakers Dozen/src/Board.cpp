@@ -51,6 +51,7 @@ void Board::update(float deltaTime) {
 			if (blocks[i]->isExploding()) {
 				blocks[i]->smash();
 				explosions[i]->explode();
+				explosionSound->play();
 				//Explicit down casting to bomb and pass across.
 				//Noting previous trigger check we can ensure safety of casting.
 				calculateExplosion((Bomb*)blocks[i], x, y);
@@ -68,6 +69,10 @@ void Board::draw()
 		ofSetColor(255);
 		blocks[i]->draw();
 	}
+}
+
+void Board::setSounds(ofSoundPlayer* explosionSound) {
+	this->explosionSound = explosionSound;
 }
 
 void Board::calculateExplosion(Bomb* bomb, int x, int y)
@@ -93,6 +98,7 @@ void Board::explodeLine(int x, int y, int dx, int dy, int power, int piercing)
 
 		if (blocks[i]->getExplosive()) {
 			blocks[i]->explode();
+			explosionSound->play();
 			return;
 		}
 

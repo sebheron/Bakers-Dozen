@@ -1,5 +1,6 @@
 #pragma once
 
+#include "ofMain.h"
 #include "Block.h"
 #include "Bomb.h"
 #include "Explosion.h"
@@ -15,11 +16,14 @@ class Board {
 private:
 	GridItem* blocks[BOARD_SIZE_SQUARED];
 	Explosion* explosions[BOARD_SIZE_SQUARED];
+	ofSoundPlayer* explosionSound;
+	ofSoundPlayer* dropSound;
 public:
 	void reset(ofTexture* breakableTexture, ofTexture* solidTexture);
 	void update(float deltaTime);
 	void draw();
 
+	void setSounds(ofSoundPlayer* explosionSound);
 	void calculateExplosion(Bomb* bomb, int x, int y);
 	void explodeLine(int x, int y, int dx, int dy, int power, int piercing);
 	bool checkPlaceBlocked(int x, int y);

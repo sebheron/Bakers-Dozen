@@ -23,10 +23,14 @@ protected:
 	Board* board;
 	std::stack<PocketBomb*> bombs;
 	int id, power, piercing, startX, startY;
+	ofSoundPlayer* walkSound;
+	ofSoundPlayer* powerupSound;
+	ofSoundPlayer* refillSound;
 public:
 	Character(std::string file, Board* board);
 
 	void setup(int x, int y);
+	void setSounds(ofSoundPlayer* walkSound, ofSoundPlayer* powerupSound, ofSoundPlayer* refillSound);
 	virtual void update(float deltaTime);
 	void draw();
 	void kill();

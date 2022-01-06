@@ -47,6 +47,8 @@ class ofApp : public ofBaseApp{
 		ofLight light;
 		ofImage bread;
 		ofTrueTypeFont text;
+		ofSoundPlayer deathSound, explosionSound, refillSound, powerupSound, walkSound,
+			themeMusic, gameMusic;
 
 		AStar* astar;
 		Board* board;
