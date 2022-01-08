@@ -218,10 +218,14 @@ void ofApp::draw(){
 		ofDisableDepthTest();
 		cam.end();
 
-		ofSetColor(0);
+		ofSetColor(30);
 		text.drawString("BOMBS:", 55, 102);
+		text.drawString("SUGAR: " + std::to_string(players[0]->getPower()), 55, 172);
+		text.drawString("YEAST: " + std::to_string(players[0]->getPiercing()), 55, 242);
 		ofSetColor(255);
 		text.drawString("BOMBS:", 50, 107);
+		text.drawString("SUGAR: " + std::to_string(players[0]->getPower()), 50, 177);
+		text.drawString("YEAST: " + std::to_string(players[0]->getPiercing()), 50, 247);
 		for (int i = 0; i < players[0]->getBombsAvailable(); i++) {
 			bread.draw(260 + 70 * i, 50, 60, 60);
 		}

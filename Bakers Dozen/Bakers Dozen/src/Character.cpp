@@ -43,11 +43,11 @@ void Character::update(float deltaTime)
 	if (moving) {
 		jumpTo(glm::vec3(x, 0, y), deltaTime * 10);
 	}
-	else if (x == startX && y == startY && bombs.empty()) {
-		bombs.push(new PocketBomb{ power, piercing });
-		bombs.push(new PocketBomb{ power, piercing });
-		bombs.push(new PocketBomb{ power, piercing });
-		refillSound->play();
+	else if (x == startX && y == startY) {
+		while (getBombsAvailable() < 3) {
+			bombs.push(new PocketBomb{ power, piercing });
+			refillSound->play();
+		}
 	}
 }
 
@@ -113,7 +113,7 @@ void Character::draw() {
 	if (living) {
 		p_model.setPosition(position.x * 2 - 15, position.y + 0.2, position.z * 2 - 15);
 		p_model.drawFaces();
-		if (bombs.empty()) {
+		if (getBombsAvailable() < 3) {
 			r_model.setRotation(0, ofGetElapsedTimeMillis() / 150, 0, 1, 0);
 			r_model.drawFaces();
 		}
@@ -197,4 +197,14 @@ int Character::getId()
 int Character::getBombsAvailable()
 {
 	return bombs.size();
+}
+
+int Character::getPower()
+{
+	return (power - 1);
+}
+
+int Character::getPiercing()
+{
+	return piercing;
 }

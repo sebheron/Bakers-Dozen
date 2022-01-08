@@ -46,6 +46,8 @@ public:
 	glm::vec3 getPosition();
 	int getId();
 	int getBombsAvailable();
+	int getPower();
+	int getPiercing();
 	
 	static std::vector<Character*> players;
 };
