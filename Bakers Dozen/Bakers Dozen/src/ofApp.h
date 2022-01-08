@@ -2,7 +2,6 @@
 
 #include "ofMain.h"
 #include "ofVec3f.h"
-#include "ofxGui.h"
 #include "Block.h"
 #include "AICharacter.h"
 #include "Board.h"

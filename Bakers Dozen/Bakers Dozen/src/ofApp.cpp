@@ -108,7 +108,7 @@ void ofApp::death(bool won)
 	gameMusic.stop();
 	ofResetElapsedTimeCounter();
 	this->won = won;
-	endText = won ? "SUCCESS\nAll other bakers have been ELIMINATED" : "DEAD\nLooks like the other bakers\nwill be taking your business";
+	endText = won ? "SUCCESS\nYou now hold the monopoly for baked goods!" : "FAILED\Now all the other bakers\nwill be taking your business!";
 	currentScene = End;
 }
 
