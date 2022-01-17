@@ -1,6 +1,7 @@
 #include "GridItem.h"
 
-GridItem::GridItem() : x(0), y(0), active(false), triggerExplosion(false), breakable(false) {}
+GridItem::GridItem(bool traversable, bool canExplode, bool breakable)
+	: active(false), traversable(traversable), triggerExplosion(false), breakable(breakable), canExplode(canExplode), Point::Point() {}
 
 void GridItem::setup(int x, int y, bool active)
 {
@@ -15,7 +16,7 @@ void GridItem::draw() {}
 
 bool GridItem::canTraverse()
 {
-	return true;
+	return traversable;
 }
 
 bool GridItem::getActive()
@@ -23,7 +24,29 @@ bool GridItem::getActive()
 	return active;
 }
 
-void GridItem::hide()
+bool GridItem::isExploding()
+{
+	return triggerExplosion;
+}
+
+bool GridItem::isBreakable()
+{
+	return breakable;
+}
+
+bool GridItem::getExplosive()
+{
+	return canExplode;
+}
+
+void GridItem::smash()
 {
 	active = false;
+	breakable = false;
+	traversable = true;
+}
+
+void GridItem::explode(bool reset)
+{
+	triggerExplosion = !reset;
 }

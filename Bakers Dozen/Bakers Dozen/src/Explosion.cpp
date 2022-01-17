@@ -1,15 +1,15 @@
 #include "Explosion.h"
 
-Explosion::Explosion() {}
+Explosion::Explosion() : exploded(false), time(0) {
+	for (int i = 0; i < PARTICLE_COUNT; i++) {
+		particles[i] = new Particle();
+	}
+}
 
 void Explosion::setup(int x, int y)
 {
 	this->x = x;
 	this->y = y;
-
-	for (int i = 0; i < PARTICLE_COUNT; i++) {
-		particles[i] = new Particle();
-	}
 }
 
 void Explosion::explode()
@@ -20,6 +20,7 @@ void Explosion::explode()
 		float fz = Random::Range(-PARTICLE_SPEED, PARTICLE_SPEED);
 		particles[i]->setup(x, y, i > PARTICLE_COUNT / 2 ? red : yellow, fx, fy, fz, PARTICLE_EMISSION_TIME);
 	}
+	exploded = true;
 	time = PARTICLE_EMISSION_TIME;
 }
 

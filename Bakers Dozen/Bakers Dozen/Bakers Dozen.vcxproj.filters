@@ -73,6 +73,21 @@
     <ClCompile Include="src\Random.cpp">
       <Filter>src</Filter>
     </ClCompile>
+    <ClCompile Include="src\Pickup.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AICharacter.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\Point.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\AStar.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
+    <ClCompile Include="src\PanelButtons.cpp">
+      <Filter>src</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="src">
@@ -315,6 +330,27 @@
       <Filter>src</Filter>
     </ClInclude>
     <ClInclude Include="src\Random.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Pickup.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AICharacter.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Point.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\AStar.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\Node.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\ofxCenteredTrueTypeFont.h">
+      <Filter>src</Filter>
+    </ClInclude>
+    <ClInclude Include="src\PanelButtons.h">
       <Filter>src</Filter>
     </ClInclude>
   </ItemGroup>

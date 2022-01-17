@@ -6,7 +6,7 @@
 
 #ifndef EXPLOSION_H
 #define EXPLOSION_H
-#define PARTICLE_COUNT 15
+#define PARTICLE_COUNT 5
 #define PARTICLE_EMISSION_TIME 0.25
 #define PARTICLE_SPEED 10
 
@@ -22,6 +22,8 @@ public:
 	void explode();
 	void update(float deltaTime);
 	void draw();
+
+	bool exploded;
 };
 
 #endif EXPLOSION_H

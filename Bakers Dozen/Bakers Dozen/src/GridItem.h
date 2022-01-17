@@ -1,24 +1,27 @@
 #pragma once
 
+#include "Point.h"
+
 #ifndef GRIDITEM_H
 #define GRIDITEM_H
 
-class GridItem {
+class GridItem : public Point {
 protected:
-	bool active;
-	int x, y;
+	bool active, traversable, triggerExplosion, breakable, canExplode;
 public:
-	GridItem();
+	GridItem(bool traversable = true, bool canExplode = false, bool breakable = false);
 
 	virtual void setup(int x, int y, bool active);
 	virtual void update(float deltaTime);
 	virtual void draw();
 
-	virtual bool canTraverse();
+	bool canTraverse();
 	bool getActive();
-	void hide();
-
-	bool triggerExplosion, breakable;
+	bool isExploding();
+	bool isBreakable();
+	bool getExplosive();
+	void smash();
+	void explode(bool reset = false);
 };
 
 #endif // GRIDITEM_H
