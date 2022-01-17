@@ -127,7 +127,7 @@ void AICharacter::update(float deltaTime)
 		}
 	}
 	else if (state == Waiting) {
-		if (!board->checkPlaceBomb(waitX, waitY))
+		if (!checkForBombs(x, y) && !board->checkPlaceBomb(waitX, waitY))
 		{
 			state = Thinking;
 			waitTime = 1.5f / intelligence;
