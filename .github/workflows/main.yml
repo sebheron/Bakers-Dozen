@@ -10,40 +10,35 @@ on:
 
 jobs:
   build:
-    strategy:
-      matrix:
-        # Cross-platform build
-        os: [windows-latest, macos-latest]
-    runs-on: ${{ matrix.os }}
+    runs-on: windows-latest
 
     steps:
-      # Download openFrameworks
-      - name: Setup openFrameworks
-        uses: nandenjin/openframeworks-action@v1
-        with:
-          command: setup-of
-          of_version: 0.12.0
+    - name: Checkout repository
+      uses: actions/checkout@v3
 
-      # Checkout your repo under `apps`
-      - uses: actions/checkout@v4
-        with:
-          path: 'apps/Bakers-Dozen'
+    - name: Install Dependencies
+      run: |
+        choco install visualstudio2017buildtools --version 15.9.35 -y
+        choco install visualstudio2017-workload-vctools -y
+        choco install glew -y
+        choco install glfw -y
+        choco install freeimage -y
 
-      # Setup your project with projectGenerator
-      - name: Generate project
-        uses: nandenjin/openframeworks-action@v1
-        with:
-          command: projectgenerator
-          project_root: 'apps/Bakers-Dozen/Bakers Dozen'
+    - name: Download OpenFrameworks
+      run: |
+        curl -L https://github.com/openframeworks/openFrameworks/archive/refs/tags/0.11.2.zip -o openFrameworks.zip
+        mkdir C:\openFrameworks
+        tar -xf openFrameworks.zip -C C:\openFrameworks --strip-components=1
+        # Manually downloading dependencies if needed (example for GLEW)
+        curl -L https://github.com/nigels-com/glew/archive/refs/tags/2.1.0.zip -o glew.zip
+        mkdir C:\glew
+        tar -xf glew.zip -C C:\glew --strip-components=1
+        # Repeat similar steps for other dependencies if needed
 
-      # (Required for MSBuild on Windows)
-      - name: Setup MSBuild
-        uses: microsoft/setup-msbuild@v2
-        if: startsWith(matrix.os, 'windows')
+    - name: Setup MSBuild
+      uses: microsoft/setup-msbuild@v1
 
-      # Build your project
-      - name: Build
-        uses: nandenjin/openframeworks-action@v1
-        with:
-          command: build
-          project_root: 'apps/Bakers-Dozen/Bakers Dozen'
+    - name: Build solution
+      run: msbuild "Bakers Dozen/Bakers Dozen/Bakers Dozen.vcxproj" /p:Configuration=Release
+      env:
+        OF_ROOT: C:\openFrameworks
