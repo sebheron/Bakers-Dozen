@@ -16,8 +16,16 @@ jobs:
     - name: Checkout repository
       uses: actions/checkout@v3
 
+    - name: Download OpenFrameworks
+      run: |
+        curl -L https://github.com/openframeworks/openFrameworks/archive/refs/tags/0.11.2.zip -o openFrameworks.zip
+        mkdir C:\openFrameworks
+        tar -xf openFrameworks.zip -C C:\openFrameworks --strip-components=1
+
     - name: Setup MSBuild
       uses: microsoft/setup-msbuild@v1
 
     - name: Build solution
       run: msbuild "Bakers Dozen/Bakers Dozen/Bakers Dozen.vcxproj" /p:Configuration=Release
+      env:
+        OF_ROOT: C:\openFrameworks
